@@ -1,4 +1,4 @@
-package com.example.petify.Auth.DTO;
+package com.example.petify.Auth.dto;
 
 
 import lombok.Builder;

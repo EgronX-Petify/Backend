@@ -39,7 +39,7 @@ public class User {
     @Column(name= "updated_at")
     private LocalDateTime updatedAt;
 
-    public static enum Role {
+    public enum Role {
         ADMIN,
         SERVICE_PROVIDER,
         PET_OWNER;

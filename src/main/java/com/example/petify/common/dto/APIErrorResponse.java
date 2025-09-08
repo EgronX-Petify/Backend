@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,6 +29,9 @@ public class APIErrorResponse {
     }
 
     public void addError(String field, String message) {
+        if (this.errors == null) {
+            errors = new ArrayList<>();
+        }
         this.errors.add(new FieldError(field, message));
     }
 
