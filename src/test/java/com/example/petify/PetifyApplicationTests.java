@@ -1,4 +1,4 @@
-package com.example.Petify;
+package com.example.petify;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
