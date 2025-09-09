@@ -125,6 +125,8 @@ Please don't share it with anyone this token is available until %s
             passReset.setActive(false);
             passResetRepo.save(passReset);
         } else {
+            passReset.setActive(false);
+            passResetRepo.save(passReset);
             throw new InvalidTokenException("Password Reset Token Expired");
         }
     }
