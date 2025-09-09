@@ -7,16 +7,16 @@ import com.example.petify.Auth.dto.SignupResponse;
 import com.example.petify.Auth.services.AuthenticationService;
 import com.example.petify.Auth.services.passwordResetService;
 import com.example.petify.common.services.EmailService;
-import com.example.petify.domain.PasswordReset.PasswordResetToken;
-import com.example.petify.domain.PasswordReset.PasswordResetTokenRepository;
-import com.example.petify.domain.User.User;
-import com.example.petify.domain.User.UserRepository;
+import com.example.petify.domain.user.model.PasswordResetToken;
+import com.example.petify.domain.user.model.PasswordResetTokenRepository;
+import com.example.petify.domain.user.model.Role;
+import com.example.petify.domain.user.model.User;
+import com.example.petify.domain.user.repository.UserRepository;
 import com.example.petify.exception.InvalidTokenException;
 import com.example.petify.exception.ResourceNotFoundException;
 import com.example.petify.exception.UsernameAlreadyExistsException;
 import com.example.petify.security.JwtService;
 import com.example.petify.security.UserInfoDetails;
-import jakarta.persistence.criteria.From;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -63,7 +63,7 @@ public class UserService implements AuthenticationService, passwordResetService 
         User user = User.builder()
                 .email(signupRequest.getEmail())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
-                .role(User.Role.getRole(signupRequest.getRole()))
+                .role(Role.getRole(signupRequest.getRole()))
                 .build();
 
         userRepo.save(user);

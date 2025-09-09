@@ -1,6 +1,6 @@
 package com.example.petify.security;
 
-import com.example.petify.domain.User.User;
+import com.example.petify.domain.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
