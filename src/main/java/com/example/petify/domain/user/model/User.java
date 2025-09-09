@@ -2,6 +2,7 @@ package com.example.petify.domain.user.model;
 
 
 import com.example.petify.domain.profile.model.Profile;
+import com.example.petify.validation.ValidRoleProfile;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
+@ValidRoleProfile
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
