@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -58,8 +60,11 @@ public class AuthController {
     @PostMapping(value = "/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ConfirmChangePassRequest req) {
         passwordResetService.ConfirmReset(req.getToken(), req.getNewPassword());
+
+        Map <String, Object> resp = new HashMap<>();
+        resp.put("message", "Password has been changed successfully");
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
-                .body("Password has been changed successfully");
+                .body(resp);
     }
 }
