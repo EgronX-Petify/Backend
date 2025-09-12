@@ -1,7 +1,7 @@
 package com.example.petify.security;
 
-import com.example.petify.domain.User.User;
-import com.example.petify.domain.User.UserRepository;
+import com.example.petify.domain.user.model.User;
+import com.example.petify.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,6 +1,5 @@
-package com.example.petify.domain.PasswordReset;
+package com.example.petify.domain.user.model;
 
-import com.example.petify.domain.User.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
