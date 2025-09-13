@@ -22,10 +22,12 @@ public class Cart {
     @JoinColumn(name = "profile_id")
     private POProfile profile;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "cart",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     private List<CartProduct> cartProducts;
-
-
 
     public void addCartProduct(CartProduct cartProduct){
         this.cartProducts.add(cartProduct);

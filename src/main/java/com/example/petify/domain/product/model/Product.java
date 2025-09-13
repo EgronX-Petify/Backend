@@ -43,6 +43,15 @@ public class Product {
     @OrderColumn(name = "image_index")
     private List<String> imageUrls = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "product_tags",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
+
+
     @Column(columnDefinition = "TEXT")
     private String notes;
 
@@ -58,9 +67,6 @@ public class Product {
 
 
 
-    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL , orphanRemoval = true)
+    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL , orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Review> reviews = new HashSet<>();
-
-
-
 }

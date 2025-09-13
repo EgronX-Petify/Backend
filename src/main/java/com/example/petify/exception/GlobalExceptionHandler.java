@@ -25,6 +25,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .message("Unexpected error occurred.")
                 .build();
+        err.addError("type", e.getClass().getName());
         err.addError("error", e.getMessage());
         return new ResponseEntity<>(err, HttpStatus.INTERNAL_SERVER_ERROR);
     }
