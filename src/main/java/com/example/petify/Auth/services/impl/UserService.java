@@ -5,12 +5,16 @@ import com.example.petify.Auth.dto.ChangePassTokenResponse;
 import com.example.petify.Auth.dto.SignupRequest;
 import com.example.petify.Auth.dto.SignupResponse;
 import com.example.petify.Auth.services.AuthenticationService;
+import com.example.petify.Auth.services.RefreshTokenService;
 import com.example.petify.Auth.services.passwordResetService;
 import com.example.petify.common.services.EmailService;
+import com.example.petify.common.utils.SecureTokenGen;
 import com.example.petify.domain.user.model.PasswordResetToken;
-import com.example.petify.domain.user.model.PasswordResetTokenRepository;
+import com.example.petify.domain.user.model.RefreshToken;
+import com.example.petify.domain.user.repository.PasswordResetTokenRepository;
 import com.example.petify.domain.user.model.Role;
 import com.example.petify.domain.user.model.User;
+import com.example.petify.domain.user.repository.RefreshTokenRepository;
 import com.example.petify.domain.user.repository.UserRepository;
 import com.example.petify.exception.InvalidTokenException;
 import com.example.petify.exception.ResourceNotFoundException;
@@ -33,7 +37,8 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements AuthenticationService, passwordResetService {
+public class UserService
+        implements AuthenticationService, passwordResetService, RefreshTokenService {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
@@ -41,6 +46,7 @@ public class UserService implements AuthenticationService, passwordResetService 
 
     private final UserRepository userRepo;
     private final PasswordResetTokenRepository passResetRepo;
+    private final RefreshTokenRepository refreshTokenRepo;
     private final EmailService emailService;
 
     @Value("${spring.mail.username}")
@@ -55,7 +61,7 @@ public class UserService implements AuthenticationService, passwordResetService 
     }
 
     @Override
-    public SignupResponse RegisterUser(SignupRequest signupRequest) {
+    public SignupResponse registerUser(SignupRequest signupRequest) {
         if (userRepo.existsByEmail(signupRequest.getEmail())) {
             throw new UsernameAlreadyExistsException("Email Already Exists");
         }
@@ -73,7 +79,7 @@ public class UserService implements AuthenticationService, passwordResetService 
     }
 
     @Override
-    public String GenerateToken(UserInfoDetails userDetails) {
+    public String generateAccessToken(UserInfoDetails userDetails) {
         return jwtService.generateToken(userDetails);
     }
 
@@ -129,5 +135,59 @@ Please don't share it with anyone this token is available until %s
             passResetRepo.save(passReset);
             throw new InvalidTokenException("Password Reset Token Expired");
         }
+    }
+
+
+    @Override
+    public String generateRefreshToken(Long userId) {
+        User user =  userRepo.findById(userId).orElseThrow(
+                () -> new UsernameNotFoundException("User with this" + userId + "id Not Found")
+        );
+
+        RefreshToken token =  RefreshToken.builder()
+                .user(user)
+                .token(SecureTokenGen.generate())
+                .expiresAt(LocalDateTime.now().plusMonths(1L))
+                .issuedAt(LocalDateTime.now())
+                .revoked(false)
+                .build();
+        refreshTokenRepo.save(token);
+        return token.getToken();
+    }
+
+    @Override
+    public RefreshToken validateRefreshToken(String token) {
+        RefreshToken refToken = refreshTokenRepo.findByToken(token).orElseThrow(
+                () -> new ResourceNotFoundException("Refresh Token Not Found")
+        );
+        if (refToken.getRevoked()) {
+            throw new InvalidTokenException("Refresh Token Expired");
+        }
+        if (refToken.getExpiresAt().isBefore(LocalDateTime.now())) {
+            throw new InvalidTokenException("Refresh Token Expired");
+        }
+        refToken.setLastUsedAt(LocalDateTime.now());
+        refreshTokenRepo.save(refToken);
+        return refToken;
+    }
+
+    @Override
+    public RefreshToken rotate(String token) {
+        RefreshToken refToken = refreshTokenRepo.findByToken(token).orElseThrow(
+                () -> new ResourceNotFoundException("Refresh Token Not Found")
+        );
+        refToken.setLastUsedAt(LocalDateTime.now());
+        refToken.setRevoked(true);
+        refreshTokenRepo.save(refToken);
+
+        RefreshToken rotatedToken = RefreshToken.builder()
+                .user(refToken.getUser())
+                .token(SecureTokenGen.generate())
+                .expiresAt(LocalDateTime.now().plusMonths(1L))
+                .issuedAt(LocalDateTime.now())
+                .revoked(false)
+                .build();
+        refreshTokenRepo.save(refToken);
+        return rotatedToken;
     }
 }
