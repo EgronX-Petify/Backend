@@ -4,7 +4,9 @@ package com.example.petify.Ecom.controller;
 import com.example.petify.Ecom.dto.ProductDto;
 import com.example.petify.Ecom.dto.ProductFilter;
 import com.example.petify.Ecom.services.ProductService;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class ProductController {
 
     // Get paginated list of products
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getProducts(
+    public ResponseEntity<Page<ProductDto>> getProducts(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) List<String> tags,
@@ -37,8 +39,8 @@ public class ProductController {
                 .category(category)
                 .tags(tags)
                 .build();
-
-        return ResponseEntity.ok(productService.getProducts(filter,limit, offset));
+        // TODO: return the response entity
+        return null;
     }
 
     // Create new product

@@ -49,6 +49,8 @@ GET /products?tags=electronics&category=phones&limit=10&offset=0
 ]
 ```
 
+**Might change and make it Page response instead of list**
+
 ---
 
 ### Get Single Product

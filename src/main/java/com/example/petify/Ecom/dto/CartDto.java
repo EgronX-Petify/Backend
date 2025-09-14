@@ -14,17 +14,19 @@ import java.util.List;
 @Builder
 public class CartDto {
     @NotNull
-    private Integer id;
+    private Long id;
 
     @NotNull
-    private Integer userId;
+    private Long userId;
 
     @Builder.Default
     private List<CartProductDto> products = new ArrayList<>();
 
+    @Data
+    @Builder
     public static class CartProductDto {
         @NotNull
-        private Integer productId;
+        private Long productId;
 
         @NotNull
         @Min(1)
