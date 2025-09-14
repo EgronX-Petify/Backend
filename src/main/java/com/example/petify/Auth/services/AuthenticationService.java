@@ -8,6 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AuthenticationService {
     UserDetails authenticate(String email, String password);
-    SignupResponse RegisterUser(SignupRequest signupRequest);
-    String GenerateToken(UserInfoDetails userDetails);
+    String generateAccessToken(UserInfoDetails userDetails);
+    SignupResponse registerUser(SignupRequest signupRequest);
 }
