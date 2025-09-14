@@ -59,6 +59,7 @@ As Shown Above.
   "status": 500,
   "message": "Unexpected error occurred.",
   "errors": {
+    "type": "Exception class name",
     "error": "Null pointer exception"
   }
 }

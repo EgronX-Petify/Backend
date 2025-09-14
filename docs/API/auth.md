@@ -17,7 +17,20 @@
   "token": "jwt_token"
 }
 ```
+**It will also set a `refresh token` COOKIE**
 ___
+## Logout
+- EndPoint: `POST /api/v1/auth/logout`
+- Description: Logout user
+- Note: **This just removes the `refresh token` cookie the front should remove the access token**
+
+### Success Response
+OK
+```txt
+Logged out
+```
+
+---
 ## Register
 - Endpoint: `POST /api/v1/auth/signup`
 - Description: Create a new user account
@@ -72,5 +85,17 @@ ___
 ```json
 {
   "message": "Password has been changed successfully"
+}
+```
+
+## Refresh Auth
+- Endpoint: `POST /api/v1/auth/refresh`
+- Description: returns new access token using the refresh token and rotate the refresh token
+
+### Success Response
+OK
+```json
+{
+  "token": "jwt_token"
 }
 ```
