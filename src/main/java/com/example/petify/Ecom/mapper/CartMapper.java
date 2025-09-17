@@ -4,7 +4,7 @@ import com.example.petify.Ecom.dto.CartDto;
 import com.example.petify.domain.cart.model.Cart;
 
 public class CartMapper {
-    public CartDto toDto(Cart cart) {
+    public static CartDto toDto(Cart cart) {
         CartDto cartDto =  CartDto.builder()
                 .userId(cart.getProfile().getId())
                 .build();

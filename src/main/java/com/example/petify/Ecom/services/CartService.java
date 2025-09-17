@@ -7,12 +7,12 @@ public interface CartService {
 
     CartDto getCartByUserId(Long userId);
 
-    CartDto addItemToCart(CartDto.CartProductDto cartProduct);
+    CartDto addItemToCart(Long userId, Long itemId,  Integer quantity);
 
-    CartDto removeItemFromCart(Long productId);
+    CartDto removeItemFromCart(Long userId, Long productId);
 
-    CartDto updateItemQuantity(CartDto.CartProductDto cartProduct);
+    CartDto updateItemQuantity(Long userId, Long productId, Integer quantity);
 
-    void clearCart(Long userId);
+    void clearUsersCart(Long userId);
 
 }

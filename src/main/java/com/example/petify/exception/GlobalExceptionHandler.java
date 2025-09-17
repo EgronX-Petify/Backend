@@ -136,4 +136,14 @@ public class GlobalExceptionHandler {
         err.addError("error", e.getMessage());
         return new ResponseEntity<>(err, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(value = PaymentGatewayException.class)
+    public ResponseEntity<APIErrorResponse> handleException(PaymentGatewayException e) {
+        APIErrorResponse err = APIErrorResponse.builder()
+                .status(HttpStatus.SERVICE_UNAVAILABLE.value())
+                .message("something wrong happened in the payment gateway")
+                .build();
+        err.addError("error", e.getMessage());
+        return new ResponseEntity<>(err, HttpStatus.SERVICE_UNAVAILABLE);
+    }
 }

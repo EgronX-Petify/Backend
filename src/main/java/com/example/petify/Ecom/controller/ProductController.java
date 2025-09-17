@@ -32,15 +32,17 @@ public class ProductController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) List<String> tags,
-            @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(defaultValue = "0") int offset) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         ProductFilter filter = ProductFilter.builder()
                 .name(name)
                 .category(category)
                 .tags(tags)
                 .build();
-        // TODO: return the response entity
-        return null;
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                productService.getProducts(filter, size, page)
+        );
     }
 
     // Create new product

@@ -1,6 +1,7 @@
 package com.example.petify.Ecom.controller;
 
 import com.example.petify.Ecom.dto.CartDto;
+import com.example.petify.Ecom.dto.UpdateCartItemQuantityRequest;
 import com.example.petify.Ecom.services.CartService;
 import com.example.petify.security.UserInfoDetails;
 import jakarta.validation.Valid;
@@ -24,29 +25,36 @@ public class CartController {
     }
 
     @GetMapping("/{cartId}")
-    public ResponseEntity<CartDto> getCart(@PathVariable long cartId) {
+    public ResponseEntity<CartDto> getCart(@PathVariable Long cartId) {
         return ResponseEntity.ok().body(
                 cartService.getCart(cartId));
     }
 
     @PostMapping("/items")
-    public ResponseEntity<CartDto> addItemToCart(@Valid CartDto.CartProductDto cartProduct) {
+    public ResponseEntity<CartDto> addItemToCart(
+            @AuthenticationPrincipal UserInfoDetails user,
+            @Valid CartDto.CartProductDto cartProduct) {
         return ResponseEntity.ok().body(
-                cartService.addItemToCart(cartProduct)
+                cartService.addItemToCart(user.getId(), cartProduct.getProductId(), cartProduct.getQuantity())
         );
     }
 
     @PostMapping("/remove/{productId}")
-    public ResponseEntity<CartDto> removeItemFromCart(@PathVariable Long productId) {
+    public ResponseEntity<CartDto> removeItemFromCart(
+            @AuthenticationPrincipal UserInfoDetails user,
+            @PathVariable Long productId) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                cartService.removeItemFromCart(productId) // get the product id
+                cartService.removeItemFromCart(user.getId(),productId)
         );
     }
 
-    @PutMapping("/add")
-    public ResponseEntity<CartDto> updateItemQuantity(@Valid CartDto.CartProductDto cartProduct) {
+    @PutMapping("/items/{productId}")
+    public ResponseEntity<CartDto> updateItemQuantity(
+            @AuthenticationPrincipal UserInfoDetails user,
+            @PathVariable Long productId,
+            @RequestBody UpdateCartItemQuantityRequest quantityRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                cartService.updateItemQuantity(cartProduct)
+                cartService.updateItemQuantity(user.getId(), productId, quantityRequest.getQuantity())
         );
     }
 
@@ -55,7 +63,7 @@ public class CartController {
             @AuthenticationPrincipal UserInfoDetails userDetails
     ) {
         Long userId = userDetails.getId();
-        cartService.clearCart(userId);
+        cartService.clearUsersCart(userId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(
                 "Cart has been cleared"
         );

@@ -28,8 +28,4 @@ public class ProductMapper {
                 .images(product.getImageUrls())
                 .build();
     }
-
-    public static Product toEntity(UserRepository repo, ProductDto productDto) {
-        // todo
-    }
 }

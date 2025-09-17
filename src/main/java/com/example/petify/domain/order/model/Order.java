@@ -20,6 +20,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private Long paymobTrnxOrderId;
+
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private POProfile profile;
