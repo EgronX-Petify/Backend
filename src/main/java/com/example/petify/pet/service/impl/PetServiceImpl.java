@@ -1,0 +1,138 @@
+package com.example.petify.pet.service.impl;
+
+import com.example.petify.auth.services.AuthenticatedUserService;
+import com.example.petify.domain.profile.model.Profile;
+import com.example.petify.domain.user.model.User;
+import com.example.petify.pet.dto.CreatePetRequest;
+import com.example.petify.pet.dto.PetResponse;
+import com.example.petify.pet.dto.UpdatePetRequest;
+import com.example.petify.domain.pet.model.Pet;
+import com.example.petify.domain.pet.repository.PetRepository;
+import com.example.petify.pet.mapper.PetMapper;
+import com.example.petify.pet.service.PetService;
+import com.example.petify.domain.profile.model.POProfile;
+import com.example.petify.exception.ResourceNotFoundException;
+import com.example.petify.security.UserInfoDetails;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class PetServiceImpl implements PetService {
+    
+    private final PetRepository petRepository;
+    private final AuthenticatedUserService authenticatedUserService;
+    private final PetMapper petMapper;
+    
+    @Override
+    public PetResponse createPet(CreatePetRequest request, Long userId) {
+        User user = authenticatedUserService.getCurrentUser();
+        if (!user.getId().equals(userId)) {
+            throw new IllegalArgumentException("User is not the owner of this pet");
+        }
+
+        POProfile profile = getPOProfile(user);
+
+        Pet pet = Pet.builder()
+                .name(request.getName())
+                .species(request.getSpecies())
+                .breed(request.getBreed())
+                .gender(request.getGender())
+                .dateOfBirth(request.getDateOfBirth())
+                .profile(profile)
+                .build();
+        
+        Pet savedPet = petRepository.save(pet);
+        return petMapper.mapToResponse(savedPet);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<PetResponse> getAllPets(Long userId) {
+        User user = authenticatedUserService.getCurrentUser();
+        if (!user.getId().equals(userId)) {
+            throw new IllegalArgumentException("User is not the owner of this pet");
+        }
+
+        POProfile profile = getPOProfile(user);
+        List<Pet> pets = petRepository.findByProfile(profile);
+
+        return pets.stream()
+                .map(petMapper::mapToResponse)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public PetResponse getPetById(Long petId, Long userId) {
+
+        User user = authenticatedUserService.getCurrentUser();
+        if (!user.getId().equals(userId)) {
+            throw new IllegalArgumentException("User is not the owner of this pet");
+        }
+        POProfile profile = getPOProfile(user);
+
+        Pet pet = petRepository.findByIdAndProfileId(petId, profile.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found with ID: " + petId));
+        return petMapper.mapToResponse(pet);
+    }
+    
+    @Override
+    public PetResponse updatePet(Long petId, UpdatePetRequest request, Long userId) {
+        User user = authenticatedUserService.getCurrentUser();
+        if (!user.getId().equals(userId)) {
+            throw new IllegalArgumentException("User is not the owner of this pet");
+        }
+
+        POProfile profile = getPOProfile(user);
+
+        Pet pet = petRepository.findByIdAndProfileId(petId, profile.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found with ID: " + petId));
+        
+        petMapper.updatePetFromRequest(pet , request);
+        
+        Pet updatedPet = petRepository.save(pet);
+        return petMapper.mapToResponse(updatedPet);
+    }
+    
+    @Override
+    public void deletePet(Long petId, Long userId) {
+        User user = authenticatedUserService.getCurrentUser();
+        if (!user.getId().equals(userId)) {
+            throw new IllegalArgumentException("User is not the owner of this pet");
+        }
+        POProfile profile = getPOProfile(user);
+
+        Pet pet = petRepository.findByIdAndProfileId(petId, profile.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found with ID: " + petId));
+        petRepository.delete(pet);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public long getPetCountByProfile(Long userId) {
+        User user = authenticatedUserService.getCurrentUser();
+        if (!user.getId().equals(userId)) {
+            throw new IllegalArgumentException("User is not the owner of this pet");
+        }
+
+        POProfile profile = getPOProfile(user);
+
+        return petRepository.countByProfileId(profile.getId());
+    }
+
+
+    private POProfile getPOProfile(User user) {
+        Profile profile = user.getProfile();
+        if (!(profile instanceof POProfile)) {
+            throw new IllegalArgumentException("User is not a Pet Owner");
+        }
+        return (POProfile) profile;
+    }
+
+}

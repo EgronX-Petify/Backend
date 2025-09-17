@@ -3,6 +3,8 @@ package com.example.petify.domain.pet.model;
 import com.example.petify.domain.profile.model.POProfile;
 import com.example.petify.domain.service.model.Appointment;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -33,6 +35,7 @@ public class Pet {
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MedicalRecord> medicalRecords = new HashSet<>();
 
+    @NotBlank(message = "Pet name is required")
     private String name;
 
     @ElementCollection
@@ -43,11 +46,18 @@ public class Pet {
     @Column(name = "image_url")
     @OrderColumn(name = "image_index")
     private List<String> imageUrls = new ArrayList<>();
+    
+    @NotBlank(message = "Species is required")
     private String species;
+    
+    @NotBlank(message = "Breed is required")
     private String breed;
+    
+    @NotBlank(message = "Gender is required")
     private String gender;
     
     @Column(name = "date_of_birth")
+    @NotNull(message = "Date of birth is required")
     private LocalDate dateOfBirth;
     
 
@@ -63,5 +73,9 @@ public class Pet {
 
     public void addMedicalRecord(MedicalRecord medicalRecord){
         this.medicalRecords.add(medicalRecord);
+    }
+
+    public void addVaccination(Vaccination vaccination){
+        this.vaccinations.add(vaccination);
     }
 }

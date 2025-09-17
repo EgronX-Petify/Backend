@@ -1,5 +1,7 @@
 package com.example.petify.user.service.impl;
 
+import com.example.petify.auth.services.AuthenticatedUserService;
+import com.example.petify.auth.services.AuthenticationService;
 import com.example.petify.domain.profile.model.Profile;
 import com.example.petify.domain.user.model.User;
 import com.example.petify.domain.user.repository.UserRepository;
@@ -21,17 +23,18 @@ public class UserServiceImpl implements UserService {
 
     private final ProfileMapper profileMapper;
     private final UserRepository userRepository;
+    private final AuthenticatedUserService authenticatedUserService;
 
     @Override
     public UserProfileResponse getCurrentUserProfile() {
-        User user = getCurrentUser();
+        User user = authenticatedUserService.getCurrentUser();
         Profile profile = user.getProfile();
         return profileMapper.toProfileResponse(profile);
     }
 
     @Override
     public UserProfileResponse updateCurrentUserProfile(UpdateUserProfileRequest request) {
-        User user = getCurrentUser();
+        User user = authenticatedUserService.getCurrentUser();
         Profile profile = user.getProfile();
 
         profileMapper.updateProfileFromRequest(profile, request);
@@ -41,15 +44,5 @@ public class UserServiceImpl implements UserService {
         return profileMapper.toProfileResponse(user.getProfile());
     }
 
-    private User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new RuntimeException("User not authenticated");
-        }
-        
-        UserInfoDetails userDetails = (UserInfoDetails) authentication.getPrincipal();
-        Long id = userDetails.getId();
-        User user = userRepository.findById(id).get();
-        return user;
-    }
+
 }

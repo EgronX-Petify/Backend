@@ -20,6 +20,7 @@ public class ProfileMapper {
         User user = profile.getUser();
 
         UserProfileResponse.UserProfileResponseBuilder builder = UserProfileResponse.builder()
+                .id(user.getId())
                 .email(user.getEmail())
                 .phoneNumber(profile.getPhoneNumber())
                 .imageUrls(profile.getImageUrls())

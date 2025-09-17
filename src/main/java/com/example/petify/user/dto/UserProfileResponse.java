@@ -15,6 +15,7 @@ public class UserProfileResponse {
 
 
     // Common fields for all profile types
+    private Long id;
     private String name;
     private String email;
     private String role;
