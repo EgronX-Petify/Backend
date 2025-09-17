@@ -1,6 +1,6 @@
 package com.example.petify.domain.service.model;
 
-import com.example.petify.domain.profile.model.Branch;
+import com.example.petify.domain.profile.model.SPProfile;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,8 +21,8 @@ public class Service {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "branch_id" , nullable = false)
-    private Branch branch;
+    @JoinColumn(name = "provider_id" , nullable = false)
+    private SPProfile provider;
 
     private String name;
 

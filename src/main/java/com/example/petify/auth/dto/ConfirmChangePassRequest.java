@@ -1,4 +1,4 @@
-package com.example.petify.Auth.dto;
+package com.example.petify.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,10 +1,10 @@
-package com.example.petify.Auth.controller;
+package com.example.petify.auth.controller;
 
 
-import com.example.petify.Auth.dto.*;
-import com.example.petify.Auth.services.AuthenticationService;
-import com.example.petify.Auth.services.RefreshTokenService;
-import com.example.petify.Auth.services.passwordResetService;
+import com.example.petify.auth.dto.*;
+import com.example.petify.auth.services.AuthenticationService;
+import com.example.petify.auth.services.RefreshTokenService;
+import com.example.petify.auth.services.passwordResetService;
 import com.example.petify.common.utils.CookieUtils;
 import com.example.petify.domain.user.model.RefreshToken;
 import com.example.petify.security.UserInfoDetails;

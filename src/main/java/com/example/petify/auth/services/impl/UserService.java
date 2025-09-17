@@ -1,14 +1,18 @@
-package com.example.petify.Auth.services.impl;
+package com.example.petify.auth.services.impl;
 
 
-import com.example.petify.Auth.dto.ChangePassTokenResponse;
-import com.example.petify.Auth.dto.SignupRequest;
-import com.example.petify.Auth.dto.SignupResponse;
-import com.example.petify.Auth.services.AuthenticationService;
-import com.example.petify.Auth.services.RefreshTokenService;
-import com.example.petify.Auth.services.passwordResetService;
+import com.example.petify.auth.dto.ChangePassTokenResponse;
+import com.example.petify.auth.dto.SignupRequest;
+import com.example.petify.auth.dto.SignupResponse;
+import com.example.petify.auth.services.AuthenticationService;
+import com.example.petify.auth.services.RefreshTokenService;
+import com.example.petify.auth.services.passwordResetService;
 import com.example.petify.common.services.EmailService;
 import com.example.petify.common.utils.SecureTokenGen;
+import com.example.petify.domain.profile.model.AdminProfile;
+import com.example.petify.domain.profile.model.POProfile;
+import com.example.petify.domain.profile.model.Profile;
+import com.example.petify.domain.profile.model.SPProfile;
 import com.example.petify.domain.user.model.PasswordResetToken;
 import com.example.petify.domain.user.model.RefreshToken;
 import com.example.petify.domain.user.repository.PasswordResetTokenRepository;
@@ -65,13 +69,24 @@ public class UserService
         if (userRepo.existsByEmail(signupRequest.getEmail())) {
             throw new UsernameAlreadyExistsException("Email Already Exists");
         }
+        Profile profile= null;
+        if(Role.getRole(signupRequest.getRole()) == Role.SERVICE_PROVIDER){
+            profile = new SPProfile();
+        }
+        else if (Role.getRole(signupRequest.getRole()) == Role.PET_OWNER){
+            profile = new POProfile();
+        }
+        else if (Role.getRole(signupRequest.getRole()) == Role.ADMIN){
+            profile = new AdminProfile();
+        }
 
         User user = User.builder()
                 .email(signupRequest.getEmail())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
                 .role(Role.getRole(signupRequest.getRole()))
+                .profile(profile)
                 .build();
-
+        profile.setUser(user);
         userRepo.save(user);
         return SignupResponse.builder()
                 .message("User Successfully Registered")

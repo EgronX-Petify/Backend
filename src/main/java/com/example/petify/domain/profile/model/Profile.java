@@ -13,13 +13,13 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Profile {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "profile_images",
             joinColumns = @JoinColumn(name = "profile_id")
@@ -33,8 +33,16 @@ public abstract class Profile {
     private User user;
 
 
-    @Column(nullable = false)
+    @Column
+    private String name;
+
+    @Column
+    private String address;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
+
+
 
     public void addImageUrl(String imageUrl) {
         this.imageUrls.add(imageUrl);

@@ -1,7 +1,7 @@
-package com.example.petify.Auth.services;
+package com.example.petify.auth.services;
 
-import com.example.petify.Auth.dto.SignupRequest;
-import com.example.petify.Auth.dto.SignupResponse;
+import com.example.petify.auth.dto.SignupRequest;
+import com.example.petify.auth.dto.SignupResponse;
 import com.example.petify.security.UserInfoDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 

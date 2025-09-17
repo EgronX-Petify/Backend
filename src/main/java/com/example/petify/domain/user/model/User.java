@@ -22,7 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false , updatable = false)
     private String email;
 
     @Column(nullable = false)
@@ -31,8 +31,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
-
-    private String location;
 
     @CreationTimestamp
     @Column(name= "created_at",nullable = false,  updatable = false)
