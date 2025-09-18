@@ -29,16 +29,16 @@ public class Pet {
     @JoinColumn(name = "profile_id" , nullable = false)
     private POProfile profile;
 
-    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
     private List<Appointment> appointments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
     private Set<MedicalRecord> medicalRecords = new HashSet<>();
 
     @NotBlank(message = "Pet name is required")
     private String name;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "pet_images",
             joinColumns = @JoinColumn(name = "pet_id")
@@ -75,7 +75,4 @@ public class Pet {
         this.medicalRecords.add(medicalRecord);
     }
 
-    public void addVaccination(Vaccination vaccination){
-        this.vaccinations.add(vaccination);
-    }
 }

@@ -34,7 +34,7 @@ public class Product {
     @Column
     private double price;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "product_images",
             joinColumns = @JoinColumn(name = "product_id")
@@ -58,7 +58,7 @@ public class Product {
 
 
 
-    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL , orphanRemoval = true)
+    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL , orphanRemoval = true , fetch = FetchType.EAGER)
     private Set<Review> reviews = new HashSet<>();
 
 

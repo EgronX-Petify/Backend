@@ -15,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Service {
+public class Services {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,17 +29,18 @@ public class Service {
     @Column
     private String description;
 
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ServiceCategory category;
+
+    @Column(nullable = false)
     private double price;
 
     @Column
     private String notes;
 
-    @Column(name = "available_at")
-    private LocalDateTime availableAt;
 
-
-    @OneToMany(mappedBy = "service" , cascade = CascadeType.ALL , orphanRemoval = true)
+    @OneToMany(mappedBy = "service" , cascade = CascadeType.ALL , orphanRemoval = true , fetch = FetchType.EAGER)
     private Set<Appointment> appointments = new HashSet<>();
 
 

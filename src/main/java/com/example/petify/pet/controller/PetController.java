@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user/{userId}/pet")
+@RequestMapping("/api/v1/user/me/pet")
 @RequiredArgsConstructor
 public class PetController {
     
@@ -27,30 +27,27 @@ public class PetController {
     @PostMapping
     @PreAuthorize("hasRole('PET_OWNER')")
     public ResponseEntity<PetResponse> createPet(
-            @Valid @RequestBody CreatePetRequest request ,
-            @PathVariable Long userId) {
+            @Valid @RequestBody CreatePetRequest request) {
 
-        PetResponse response = petService.createPet(request , userId);
+        PetResponse response = petService.createPet(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     
 
     @GetMapping
     @PreAuthorize("hasRole('PET_OWNER')")
-    public ResponseEntity<List<PetResponse>> getAllPets(@PathVariable Long userId) {
+    public ResponseEntity<List<PetResponse>> getAllPets() {
 
-        List<PetResponse> pets = petService.getAllPets(userId);
+        List<PetResponse> pets = petService.getAllPets();
         return ResponseEntity.ok(pets);
     }
     
 
     @GetMapping("/{petId}")
     @PreAuthorize("hasRole('PET_OWNER')")
-    public ResponseEntity<PetResponse> getPetById(
-            @PathVariable Long petId,
-            @PathVariable Long userId) {
+    public ResponseEntity<PetResponse> getPetById(@PathVariable Long petId) {
 
-        PetResponse response = petService.getPetById(petId, userId);
+        PetResponse response = petService.getPetById(petId);
         return ResponseEntity.ok(response);
     }
 
@@ -58,29 +55,26 @@ public class PetController {
     @PreAuthorize("hasRole('PET_OWNER')")
     public ResponseEntity<PetResponse> updatePet(
             @PathVariable Long petId,
-            @Valid @RequestBody UpdatePetRequest request,
-            @PathVariable Long userId) {
+            @Valid @RequestBody UpdatePetRequest request) {
 
-        PetResponse response = petService.updatePet(petId, request, userId);
+        PetResponse response = petService.updatePet(petId, request);
         return ResponseEntity.ok(response);
     }
     
 
     @DeleteMapping("/{petId}")
     @PreAuthorize("hasRole('PET_OWNER')")
-    public ResponseEntity<Void> deletePet(
-            @PathVariable Long petId,
-            @PathVariable Long userId) {
+    public ResponseEntity<Void> deletePet(@PathVariable Long petId) {
 
-        petService.deletePet(petId, userId);
+        petService.deletePet(petId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/count")
     @PreAuthorize("hasRole('PET_OWNER')")
-    public ResponseEntity<Long> getPetCount(@PathVariable Long userId) {
+    public ResponseEntity<Long> getPetCount() {
 
-        long count = petService.getPetCountByProfile(userId);
+        long count = petService.getPetCountByProfile();
         return ResponseEntity.ok(count);
     }
 

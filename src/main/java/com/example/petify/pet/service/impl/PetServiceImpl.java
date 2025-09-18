@@ -30,11 +30,8 @@ public class PetServiceImpl implements PetService {
     private final PetMapper petMapper;
     
     @Override
-    public PetResponse createPet(CreatePetRequest request, Long userId) {
+    public PetResponse createPet(CreatePetRequest request) {
         User user = authenticatedUserService.getCurrentUser();
-        if (!user.getId().equals(userId)) {
-            throw new IllegalArgumentException("User is not the owner of this pet");
-        }
 
         POProfile profile = getPOProfile(user);
 
@@ -53,12 +50,9 @@ public class PetServiceImpl implements PetService {
     
     @Override
     @Transactional(readOnly = true)
-    public List<PetResponse> getAllPets(Long userId) {
-        User user = authenticatedUserService.getCurrentUser();
-        if (!user.getId().equals(userId)) {
-            throw new IllegalArgumentException("User is not the owner of this pet");
-        }
+    public List<PetResponse> getAllPets() {
 
+        User user = authenticatedUserService.getCurrentUser();
         POProfile profile = getPOProfile(user);
         List<Pet> pets = petRepository.findByProfile(profile);
 
@@ -69,12 +63,9 @@ public class PetServiceImpl implements PetService {
     
     @Override
     @Transactional(readOnly = true)
-    public PetResponse getPetById(Long petId, Long userId) {
+    public PetResponse getPetById(Long petId) {
 
         User user = authenticatedUserService.getCurrentUser();
-        if (!user.getId().equals(userId)) {
-            throw new IllegalArgumentException("User is not the owner of this pet");
-        }
         POProfile profile = getPOProfile(user);
 
         Pet pet = petRepository.findByIdAndProfileId(petId, profile.getId())
@@ -83,12 +74,8 @@ public class PetServiceImpl implements PetService {
     }
     
     @Override
-    public PetResponse updatePet(Long petId, UpdatePetRequest request, Long userId) {
+    public PetResponse updatePet(Long petId, UpdatePetRequest request) {
         User user = authenticatedUserService.getCurrentUser();
-        if (!user.getId().equals(userId)) {
-            throw new IllegalArgumentException("User is not the owner of this pet");
-        }
-
         POProfile profile = getPOProfile(user);
 
         Pet pet = petRepository.findByIdAndProfileId(petId, profile.getId())
@@ -101,11 +88,8 @@ public class PetServiceImpl implements PetService {
     }
     
     @Override
-    public void deletePet(Long petId, Long userId) {
+    public void deletePet(Long petId) {
         User user = authenticatedUserService.getCurrentUser();
-        if (!user.getId().equals(userId)) {
-            throw new IllegalArgumentException("User is not the owner of this pet");
-        }
         POProfile profile = getPOProfile(user);
 
         Pet pet = petRepository.findByIdAndProfileId(petId, profile.getId())
@@ -115,12 +99,8 @@ public class PetServiceImpl implements PetService {
     
     @Override
     @Transactional(readOnly = true)
-    public long getPetCountByProfile(Long userId) {
+    public long getPetCountByProfile() {
         User user = authenticatedUserService.getCurrentUser();
-        if (!user.getId().equals(userId)) {
-            throw new IllegalArgumentException("User is not the owner of this pet");
-        }
-
         POProfile profile = getPOProfile(user);
 
         return petRepository.countByProfileId(profile.getId());
