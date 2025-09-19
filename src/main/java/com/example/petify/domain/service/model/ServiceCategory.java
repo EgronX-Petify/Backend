@@ -7,5 +7,6 @@ public enum ServiceCategory {
     BOARDING,
     WALKING,
     SITTING,
+    VACCINATION,
     OTHER
 }

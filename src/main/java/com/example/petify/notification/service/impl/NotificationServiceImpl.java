@@ -1,0 +1,213 @@
+package com.example.petify.notification.service.impl;
+
+import com.example.petify.domain.profile.model.Notification;
+import com.example.petify.domain.profile.model.NotificationType;
+import com.example.petify.domain.profile.model.Profile;
+import com.example.petify.domain.profile.repository.NotificationRepository;
+import com.example.petify.notification.service.NotificationService;
+import com.example.petify.domain.service.model.Appointment;
+import com.example.petify.domain.user.repository.UserRepository;
+import com.example.petify.exception.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class NotificationServiceImpl implements NotificationService {
+    
+    private final NotificationRepository notificationRepository;
+    private final UserRepository userRepository;
+    
+    @Override
+    public Notification createNotification(Profile recipient, String title, String message, NotificationType type) {
+        Notification notification = Notification.builder()
+                .recipient(recipient)
+                .title(title)
+                .message(message)
+                .type(type)
+                .isRead(false)
+                .build();
+
+        return notificationRepository.save(notification);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Notification> getNotifications(Profile recipient, Pageable pageable) {
+        return notificationRepository.findByRecipientOrderByCreatedAtDesc(recipient, pageable);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Notification> getUnreadNotifications(Profile recipient, Pageable pageable) {
+        return notificationRepository.findByRecipientAndIsReadFalseOrderByCreatedAtDesc(recipient, pageable);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public long getAllNotificationsCount(Profile recipient) {
+        return notificationRepository.countByRecipient(recipient);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long getUnreadCount(Profile recipient) {
+        return notificationRepository.countByRecipientAndIsReadFalse(recipient);
+    }
+
+
+    @Override
+    public void markAsRead(Long notificationId, Long recipientId) {
+        int updated = notificationRepository.markAsRead(notificationId, recipientId);
+        if (updated == 0) {
+            throw new ResourceNotFoundException("Notification not found or doesn't belong to user");
+        }
+    }
+    
+    @Override
+    public void markAllAsRead(Long recipientId) {
+        int updated = notificationRepository.markAllAsRead(recipientId);
+    }
+    
+    @Override
+    public void sendWelcomeNotification(Profile recipient) {
+        String title = "Welcome to Petify! 🐾";
+        String message = String.format("Hello %s! Welcome to Petify, your trusted pet care companion. " +
+                "We're excited to help you take the best care of your furry friends. " +
+                "Explore our services and connect with professional pet care providers in your area.",
+                recipient.getName() != null ? recipient.getName() : "Pet Lover");
+        
+        createNotification(recipient, title, message, NotificationType.WELCOME);
+    }
+    
+    @Override
+    public void sendAppointmentCreatedNotification(Appointment appointment) {
+        Profile petOwner = appointment.getPet().getProfile();
+        String title = "Appointment Request Submitted";
+        String message = String.format("Your appointment request for %s with %s has been submitted successfully. " +
+                "Requested time: %s. You'll be notified once the service provider responds.",
+                appointment.getPet().getName(),
+                appointment.getService().getName(),
+                appointment.getRequestedTime().toString());
+        
+        createNotification(petOwner, title, message, NotificationType.APPOINTMENT_CREATED);
+    }
+    
+    @Override
+    public void sendAppointmentApprovedNotification(Appointment appointment) {
+        Profile petOwner = appointment.getPet().getProfile();
+        String title = "Appointment Approved ✅";
+        String message = String.format("Great news! Your appointment for %s has been approved. " +
+                "Scheduled time: %s. Please arrive on time and bring your pet ready for the service.",
+                appointment.getPet().getName(),
+                appointment.getScheduledTime().toString());
+        
+        createNotification(petOwner, title, message, NotificationType.APPOINTMENT_APPROVED);
+    }
+    
+    @Override
+    public void sendAppointmentCompletedNotification(Appointment appointment) {
+        Profile petOwner = appointment.getPet().getProfile();
+        String title = "Service Completed 🎉";
+        String message = String.format("The %s service for %s has been completed successfully. " +
+                "Thank you for choosing our service! We hope you and your pet had a great experience.",
+                appointment.getService().getName(),
+                appointment.getPet().getName());
+        
+        createNotification(petOwner, title, message, NotificationType.APPOINTMENT_COMPLETED);
+    }
+    
+    @Override
+    public void sendAppointmentCancelledNotification(Appointment appointment) {
+        Profile petOwner = appointment.getPet().getProfile();
+        String title = "Appointment Cancelled";
+        String POMessage = String.format("Your appointment for %s scheduled for %s has been cancelled. " +
+                        "If you have any questions, please contact our support team.",
+                appointment.getPet().getName(),
+                appointment.getScheduledTime() != null ? appointment.getScheduledTime().toString() : appointment.getRequestedTime().toString());
+
+        Profile serviceProvider = appointment.getService().getProvider();
+        String SPMessage = String.format("Your appointment for %s scheduled for %s has been cancelled. " +
+                        "If you have any questions, please contact our support team.",
+                appointment.getService().getName(),
+                appointment.getScheduledTime() != null ? appointment.getScheduledTime().toString() : appointment.getRequestedTime().toString());
+
+        createNotification(petOwner, title, POMessage , NotificationType.APPOINTMENT_CANCELLED);
+        createNotification(serviceProvider, title, POMessage , NotificationType.APPOINTMENT_CANCELLED);
+    }
+    
+    @Override
+    public void sendAppointmentRejectedNotification(Appointment appointment) {
+        Profile petOwner = appointment.getPet().getProfile();
+        String title = "Appointment Request Declined";
+        String message = String.format("Unfortunately, your appointment request for %s has been declined. " +
+                "%s Please feel free to request a different time or try another service provider.",
+                appointment.getPet().getName(),
+                appointment.getRejectionReason() != null ? "Reason: " + appointment.getRejectionReason() + ". " : "");
+        
+        createNotification(petOwner, title, message, NotificationType.APPOINTMENT_REJECTED);
+    }
+    
+    @Override
+    public void sendNewAppointmentRequestNotification(Appointment appointment) {
+        Profile serviceProvider = appointment.getService().getProvider();
+        String title = "New Appointment Request 📅";
+        String message = String.format("You have a new appointment request for %s. " +
+                "Pet: %s, Requested time: %s. Please review and respond promptly.",
+                appointment.getService().getName(),
+                appointment.getPet().getName(),
+                appointment.getRequestedTime().toString());
+        
+        createNotification(serviceProvider, title, message, NotificationType.NEW_APPOINTMENT_REQUEST);
+    }
+    
+    @Override
+    public void sendSystemMaintenanceNotification(String message) {
+        // Send to all users - this would be called by an admin function
+        List<Profile> allProfiles = userRepository.findAll().stream()
+                .map(user -> user.getProfile())
+                .toList();
+        
+        String title = "System Maintenance Notice";
+        for (Profile profile : allProfiles) {
+            createNotification(profile, title, message, NotificationType.SYSTEM_MAINTENANCE);
+        }
+    }
+    
+    @Override
+    public void sendProfileUpdateNotification(Profile recipient) {
+        String title = "Profile Updated";
+        String message = "Your profile information has been updated successfully. " +
+                "If you didn't make these changes, please contact our support team immediately.";
+        
+        createNotification(recipient, title, message, NotificationType.PROFILE_UPDATE);
+    }
+    
+    @Override
+    public void sendAppointmentReminderNotification(Appointment appointment) {
+        Profile petOwner = appointment.getPet().getProfile();
+        String title = "Appointment Reminder 🔔";
+        String message = String.format("Don't forget! You have an appointment for %s scheduled for %s. " +
+                "Please arrive on time with your pet ready for the service.",
+                appointment.getPet().getName(),
+                appointment.getScheduledTime().toString());
+        
+        createNotification(petOwner, title, message, NotificationType.APPOINTMENT_REMINDER);
+    }
+    
+    @Override
+    public void cleanupOldNotifications() {
+        LocalDateTime cutoffDate = LocalDateTime.now().minusDays(30);
+        notificationRepository.deleteOldReadNotifications(cutoffDate);
+    }
+
+
+}

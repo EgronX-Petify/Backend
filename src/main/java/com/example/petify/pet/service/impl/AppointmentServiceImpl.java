@@ -5,7 +5,7 @@ import com.example.petify.domain.pet.model.MedicalRecord;
 import com.example.petify.domain.pet.model.Pet;
 import com.example.petify.domain.pet.repository.MedicalRecordRepository;
 import com.example.petify.domain.pet.repository.PetRepository;
-import com.example.petify.domain.profile.model.SPProfile;
+import com.example.petify.notification.service.NotificationService;
 import com.example.petify.domain.service.model.Appointment;
 import com.example.petify.domain.service.model.AppointmentStatus;
 import com.example.petify.domain.service.model.Services;
@@ -23,7 +23,6 @@ import com.example.petify.pet.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,8 +37,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final ServiceRepository serviceRepository;
     private final MedicalRecordRepository medicalRecordRepository;
     private final AppointmentMapper appointmentMapper;
-    private final UserRepository userRepository;
     private final AuthenticatedUserService authenticatedUserService;
+    private final NotificationService notificationService;
 
     @Override
     public AppointmentResponse createAppointment(CreateAppointmentRequest request) {
@@ -63,6 +62,13 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .build();
 
         appointment = appointmentRepository.save(appointment);
+        
+        //## Send notifications ##//
+        // Notify pet owner that appointment was created
+        notificationService.sendAppointmentCreatedNotification(appointment);
+        // Notify service provider about new appointment request
+        notificationService.sendNewAppointmentRequestNotification(appointment);
+        
         return appointmentMapper.mapToResponse(appointment);
     }
 
@@ -181,6 +187,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void cancelAppointment(Long appointmentId) {
 
         Appointment appointment = checkAuthority(appointmentId);
+        notificationService.sendAppointmentCancelledNotification(appointment);
+        
         appointmentRepository.delete(appointment);
     }
 
@@ -202,6 +210,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
 
         appointment = appointmentRepository.save(appointment);
+        notificationService.sendAppointmentApprovedNotification(appointment);
+        
         return appointmentMapper.mapToResponse(appointment);
     }
 
@@ -216,6 +226,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setRejectionReason(request.getRejectionReason());
 
         appointment = appointmentRepository.save(appointment);
+
+        notificationService.sendAppointmentRejectedNotification(appointment);
+        
         return appointmentMapper.mapToResponse(appointment);
     }
 
@@ -231,7 +244,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment = appointmentRepository.save(appointment);
         
         createMedicalRecord(appointment);
-        
+        notificationService.sendAppointmentCompletedNotification(appointment);
+
         return appointmentMapper.mapToResponse(appointment);
     }
     

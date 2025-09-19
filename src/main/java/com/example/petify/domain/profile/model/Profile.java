@@ -29,6 +29,9 @@ public abstract class Profile {
     private User user;
 
 
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Notification> notifications = new HashSet<>();
+
     @Column
     private String name;
 
@@ -41,5 +44,8 @@ public abstract class Profile {
 
     public void addImage(ProfileImage image) {
         this.images.add(image);
+    }
+    public void addNotification(Notification notification){
+        this.notifications.add(notification);
     }
 }

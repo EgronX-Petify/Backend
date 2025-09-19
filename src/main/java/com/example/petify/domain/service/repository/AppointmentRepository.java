@@ -49,4 +49,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query("SELECT a FROM Appointment a WHERE a.pet.id = :petId AND a.status = :status ORDER BY a.createdAt DESC")
     List<Appointment> findAppointmentsByPetIdAndStatus(@Param("petId") Long petId, @Param("status") AppointmentStatus status);
+    
+    List<Appointment> findByStatusAndScheduledTimeBetween(AppointmentStatus status, 
+                                                         LocalDateTime startTime, 
+                                                         LocalDateTime endTime);
 }

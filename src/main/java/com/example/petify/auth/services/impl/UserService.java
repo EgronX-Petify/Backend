@@ -13,6 +13,7 @@ import com.example.petify.domain.profile.model.AdminProfile;
 import com.example.petify.domain.profile.model.POProfile;
 import com.example.petify.domain.profile.model.Profile;
 import com.example.petify.domain.profile.model.SPProfile;
+import com.example.petify.notification.service.NotificationService;
 import com.example.petify.domain.user.model.PasswordResetToken;
 import com.example.petify.domain.user.model.RefreshToken;
 import com.example.petify.domain.user.repository.PasswordResetTokenRepository;
@@ -52,6 +53,7 @@ public class UserService
     private final PasswordResetTokenRepository passResetRepo;
     private final RefreshTokenRepository refreshTokenRepo;
     private final EmailService emailService;
+    private final NotificationService notificationService;
 
     @Value("${spring.mail.username}")
     String FromMail;
@@ -88,6 +90,11 @@ public class UserService
                 .build();
         profile.setUser(user);
         userRepo.save(user);
+        
+        // Send welcome notification
+        notificationService.sendWelcomeNotification(profile);
+
+
         return SignupResponse.builder()
                 .message("User Successfully Registered")
                 .build();
