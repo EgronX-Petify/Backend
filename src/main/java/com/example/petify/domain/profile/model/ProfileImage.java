@@ -1,6 +1,7 @@
 package com.example.petify.domain.profile.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import lombok.*;
 @Setter
 public class ProfileImage {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String name;
@@ -22,9 +23,11 @@ public class ProfileImage {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(nullable = false)
+    @Column(name = "data", columnDefinition = "MEDIUMBLOB")
     private byte[] data;
 
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private Profile profile;

@@ -17,7 +17,7 @@ public class PetMapper {
                 .breed(pet.getBreed())
                 .gender(pet.getGender())
                 .dateOfBirth(pet.getDateOfBirth())
-                .imageUrls(pet.getImageUrls())
+                .images(pet.getImages())
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package com.example.petify.pet.dto;
 
+import com.example.petify.domain.pet.model.PetImage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,5 +22,5 @@ public class PetResponse {
     private String breed;
     private String gender;
     private LocalDate dateOfBirth;
-    private List<String> imageUrls;
+    private Set<PetImage> images;
 }

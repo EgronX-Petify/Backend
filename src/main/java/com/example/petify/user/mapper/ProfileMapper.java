@@ -23,7 +23,7 @@ public class ProfileMapper {
                 .id(user.getId())
                 .email(user.getEmail())
                 .phoneNumber(profile.getPhoneNumber())
-                .imageUrls(profile.getImageUrls())
+                .images(profile.getImages())
                 .role(user.getRole().name())
                 .name(profile.getName())
                 .address(profile.getAddress());

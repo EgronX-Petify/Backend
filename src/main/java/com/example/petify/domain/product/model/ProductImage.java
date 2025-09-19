@@ -1,5 +1,6 @@
 package com.example.petify.domain.product.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import lombok.*;
 @Setter
 public class ProductImage {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String name;
@@ -21,9 +22,11 @@ public class ProductImage {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(nullable = false)
+    @Column(name = "data", columnDefinition = "MEDIUMBLOB")
     private byte[] data;
 
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "profile_id")
     private Product product;
