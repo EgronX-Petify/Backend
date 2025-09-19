@@ -1,5 +1,6 @@
 package com.example.petify.user.dto;
 
+import com.example.petify.domain.profile.model.ProfileImage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class UserProfileResponse {
     private String name;
     private String email;
     private String role;
-    private List<String> imageUrls;
+    private List<ProfileImage> images;
     private String phoneNumber;
     private String address;
 

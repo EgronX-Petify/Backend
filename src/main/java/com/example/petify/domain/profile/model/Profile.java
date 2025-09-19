@@ -4,29 +4,25 @@ package com.example.petify.domain.profile.model;
 import com.example.petify.domain.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
+@Table(name = "profile")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "profile_images",
-            joinColumns = @JoinColumn(name = "profile_id")
-    )
-    @Column(name = "image_url")
-    @OrderColumn(name = "image_index")
-    private List<String> imageUrls = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    private Set<ProfileImage> images = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
@@ -43,8 +39,7 @@ public abstract class Profile {
     private String phoneNumber;
 
 
-
-    public void addImageUrl(String imageUrl) {
-        this.imageUrls.add(imageUrl);
+    public void addImage(ProfileImage image) {
+        this.images.add(image);
     }
 }

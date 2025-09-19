@@ -38,14 +38,8 @@ public class Pet {
     @NotBlank(message = "Pet name is required")
     private String name;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "pet_images",
-            joinColumns = @JoinColumn(name = "pet_id")
-    )
-    @Column(name = "image_url")
-    @OrderColumn(name = "image_index")
-    private List<String> imageUrls = new ArrayList<>();
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    private Set<PetImage> images = new HashSet<>();
     
     @NotBlank(message = "Species is required")
     private String species;
@@ -63,8 +57,8 @@ public class Pet {
 
 
 
-    public void addImageUrl(String url){
-        this.imageUrls.add(url);
+    public void addImage(PetImage image){
+        this.images.add(image);
     }
 
     public void addAppointment(Appointment appointment){
