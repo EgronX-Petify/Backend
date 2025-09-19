@@ -7,6 +7,7 @@ import com.example.petify.Auth.services.RefreshTokenService;
 import com.example.petify.Auth.services.passwordResetService;
 import com.example.petify.common.utils.CookieUtils;
 import com.example.petify.domain.user.model.RefreshToken;
+import com.example.petify.config.AppConfig;
 import com.example.petify.security.UserInfoDetails;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,8 @@ public class AuthController {
 
     @Value(value = "${refresh.expirationSec}")
     private int refreshTokenMaxAge;
+    
+    private final AppConfig appConfig;
 
     @PostMapping(value = "/login")
     public ResponseEntity<LoginResponse> login(HttpServletResponse response, @Valid @RequestBody LoginRequest loginRequest) {
@@ -101,9 +104,14 @@ public class AuthController {
     @PostMapping(value = "/forgot-password")
     public ResponseEntity<?> forgotPassword(@Valid @RequestBody ChangePassRequest req) {
         ChangePassTokenResponse resp = passwordResetService.ResetPassword(req.getEmail());
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                resp // TODO: for testing only remove
-        );
+        if (appConfig.isDev()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(
+                    resp
+            );
+        }else {
+            return ResponseEntity.status(HttpStatus.CREATED).body("Token has been sent to your email successfully");
+        }
+
     }
 
     @PostMapping(value = "/change-password")
