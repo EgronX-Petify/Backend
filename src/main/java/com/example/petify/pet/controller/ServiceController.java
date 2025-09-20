@@ -116,12 +116,12 @@ public class ServiceController {
         
         if ("upcoming".equals(timeFilter)) {
             appointments = appointments.stream()
-                    .filter(appointment -> appointment.getScheduledTime().isAfter(java.time.LocalDateTime.now()))
+                    .filter(appointment -> appointment.getScheduledTime()!=null && appointment.getScheduledTime().isAfter(java.time.LocalDateTime.now()))
                     .sorted((a, b) -> a.getScheduledTime().compareTo(b.getScheduledTime()))
                     .toList();
         } else if ("past".equals(timeFilter)) {
             appointments = appointments.stream()
-                    .filter(appointment -> appointment.getScheduledTime().isBefore(java.time.LocalDateTime.now()))
+                    .filter(appointment -> appointment.getScheduledTime()!=null && appointment.getScheduledTime().isBefore(java.time.LocalDateTime.now()))
                     .sorted((a, b) -> b.getScheduledTime().compareTo(a.getScheduledTime()))
                     .toList();
         }
@@ -146,12 +146,12 @@ public class ServiceController {
         
         if ("upcoming".equals(timeFilter)) {
             appointments = appointments.stream()
-                    .filter(appointment -> appointment.getScheduledTime().isAfter(java.time.LocalDateTime.now()))
+                    .filter(appointment -> appointment.getScheduledTime()!=null && appointment.getScheduledTime().isAfter(java.time.LocalDateTime.now()))
                     .sorted((a, b) -> a.getScheduledTime().compareTo(b.getScheduledTime()))
                     .toList();
         } else if ("past".equals(timeFilter)) {
             appointments = appointments.stream()
-                    .filter(appointment -> appointment.getScheduledTime().isBefore(java.time.LocalDateTime.now()))
+                    .filter(appointment -> appointment.getScheduledTime()!=null && appointment.getScheduledTime().isBefore(java.time.LocalDateTime.now()))
                     .sorted((a, b) -> b.getScheduledTime().compareTo(a.getScheduledTime()))
                     .toList();
         }
@@ -183,7 +183,7 @@ public class ServiceController {
         return ResponseEntity.ok(appointment);
     }
 
-    @PatchMapping("/provider/me/appointments/{appointmentId}/reject")
+    @PatchMapping("/provider/me/appointment/{appointmentId}/reject")
     @PreAuthorize("hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<AppointmentResponse> rejectAppointment(
             @PathVariable Long appointmentId,
@@ -192,7 +192,7 @@ public class ServiceController {
         return ResponseEntity.ok(appointment);
     }
 
-    @PatchMapping("/provider/me/appointments/{appointmentId}/complete")
+    @PatchMapping("/provider/me/appointment/{appointmentId}/complete")
     @PreAuthorize("hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<AppointmentResponse> completeAppointment(
             @PathVariable Long appointmentId) {
