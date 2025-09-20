@@ -28,7 +28,6 @@ public class ServiceController {
 
 
     @GetMapping("/service/search")
-    @PreAuthorize("permitAll()")
     public ResponseEntity<List<ServiceResponse>> searchServices(
             @RequestParam String searchTerm) {
         List<ServiceResponse> services = serviceService.searchServices(searchTerm);
@@ -36,14 +35,12 @@ public class ServiceController {
     }
 
     @GetMapping("/service/categories")
-    @PreAuthorize("permitAll()")
     public ResponseEntity<ServiceCategory[]> getServiceCategories() {
         return ResponseEntity.ok(ServiceCategory.values());
     }
 
 
     @GetMapping("/service")
-    @PreAuthorize("permitAll()")
     public ResponseEntity<List<ServiceResponse>> getAllServices(
             @RequestParam(required = false) String category ,
             @RequestParam(required = false) Long providerId) {
@@ -68,7 +65,6 @@ public class ServiceController {
 
 
     @GetMapping("/service/{id}")
-    @PreAuthorize("permitAll()")
     public ResponseEntity<ServiceResponse> getServiceById(@PathVariable Long id) {
         ServiceResponse service = serviceService.getServiceById(id);
         return ResponseEntity.ok(service);

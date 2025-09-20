@@ -76,7 +76,7 @@ public class PetServiceImpl implements PetService {
         POProfile profile = getPOProfile(user);
 
         Pet pet = petRepository.findByIdAndProfileId(petId, profile.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Pet not found with ID: " + petId));
+                .orElseThrow(() -> new ResourceNotFoundException("error while fetching the pet with id: " + petId));
         return petMapper.mapToResponse(pet);
     }
     

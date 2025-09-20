@@ -37,7 +37,6 @@ public class UserController {
 
 
     @GetMapping("/{userId}")
-    @PreAuthorize("permitAll()")
     public ResponseEntity<UserProfileResponse> getUserProfile(@PathVariable Long userId) {
         UserProfileResponse profile = userService.getUserProfile(userId);
         return ResponseEntity.ok(profile);

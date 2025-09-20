@@ -12,7 +12,6 @@ import com.example.petify.domain.service.model.Services;
 import com.example.petify.domain.service.repository.AppointmentRepository;
 import com.example.petify.domain.service.repository.ServiceRepository;
 import com.example.petify.domain.user.model.User;
-import com.example.petify.domain.user.repository.UserRepository;
 import com.example.petify.exception.ResourceNotFoundException;
 import com.example.petify.pet.dto.AppointmentResponse;
 import com.example.petify.pet.dto.ApproveAppointmentRequest;
@@ -21,15 +20,18 @@ import com.example.petify.pet.dto.RejectAppointmentRequest;
 import com.example.petify.pet.mapper.AppointmentMapper;
 import com.example.petify.pet.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@org.springframework.stereotype.Service
+@Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
@@ -184,12 +186,27 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 
     @Override
+    @Transactional
     public void cancelAppointment(Long appointmentId) {
 
         Appointment appointment = checkAuthority(appointmentId);
-        notificationService.sendAppointmentCancelledNotification(appointment);
-        
+
+
+
+        // Remove from parent collections to maintain bidirectional relationship integrity
+        Pet pet = appointment.getPet();
+        Services service = appointment.getService();
+
+        pet.getAppointments().remove(appointment);
+        service.getAppointments().remove(appointment);
+
         appointmentRepository.delete(appointment);
+
+        // Flush to ensure deletion is sent to database
+        appointmentRepository.flush();
+
+        notificationService.sendAppointmentCancelledNotification(appointment);
+
     }
 
 
