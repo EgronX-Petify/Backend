@@ -1,5 +1,6 @@
 package com.example.petify.notification.service.impl;
 
+import com.example.petify.common.services.EmailService;
 import com.example.petify.domain.profile.model.Notification;
 import com.example.petify.domain.profile.model.NotificationType;
 import com.example.petify.domain.profile.model.Profile;
@@ -9,6 +10,7 @@ import com.example.petify.domain.service.model.Appointment;
 import com.example.petify.domain.user.repository.UserRepository;
 import com.example.petify.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,10 @@ public class NotificationServiceImpl implements NotificationService {
     
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
+    
+    @Value("${spring.mail.username}")
+    private String fromEmail;
     
     @Override
     public Notification createNotification(Profile recipient, String title, String message, NotificationType type) {
@@ -86,6 +92,7 @@ public class NotificationServiceImpl implements NotificationService {
                 recipient.getName() != null ? recipient.getName() : "Pet Lover");
         
         createNotification(recipient, title, message, NotificationType.WELCOME);
+        emailService.sendEmail(fromEmail, recipient.getUser().getEmail(), title, message);
     }
     
     @Override
@@ -99,6 +106,7 @@ public class NotificationServiceImpl implements NotificationService {
                 appointment.getRequestedTime().toString());
         
         createNotification(petOwner, title, message, NotificationType.APPOINTMENT_CREATED);
+        emailService.sendEmail(fromEmail, petOwner.getUser().getEmail(), title, message);
     }
     
     @Override
@@ -111,6 +119,7 @@ public class NotificationServiceImpl implements NotificationService {
                 appointment.getScheduledTime().toString());
         
         createNotification(petOwner, title, message, NotificationType.APPOINTMENT_APPROVED);
+        emailService.sendEmail(fromEmail, petOwner.getUser().getEmail(), title, message);
     }
     
     @Override
@@ -123,6 +132,7 @@ public class NotificationServiceImpl implements NotificationService {
                 appointment.getPet().getName());
         
         createNotification(petOwner, title, message, NotificationType.APPOINTMENT_COMPLETED);
+        emailService.sendEmail(fromEmail, petOwner.getUser().getEmail(), title, message);
     }
     
     @Override
@@ -141,7 +151,9 @@ public class NotificationServiceImpl implements NotificationService {
                 appointment.getScheduledTime() != null ? appointment.getScheduledTime().toString() : appointment.getRequestedTime().toString());
 
         createNotification(petOwner, title, POMessage , NotificationType.APPOINTMENT_CANCELLED);
-        createNotification(serviceProvider, title, POMessage , NotificationType.APPOINTMENT_CANCELLED);
+        createNotification(serviceProvider, title, SPMessage , NotificationType.APPOINTMENT_CANCELLED);
+        emailService.sendEmail(fromEmail, petOwner.getUser().getEmail(), title, POMessage);
+        emailService.sendEmail(fromEmail, serviceProvider.getUser().getEmail(), title, SPMessage);
     }
     
     @Override
@@ -154,6 +166,7 @@ public class NotificationServiceImpl implements NotificationService {
                 appointment.getRejectionReason() != null ? "Reason: " + appointment.getRejectionReason() + ". " : "");
         
         createNotification(petOwner, title, message, NotificationType.APPOINTMENT_REJECTED);
+        emailService.sendEmail(fromEmail, petOwner.getUser().getEmail(), title, message);
     }
     
     @Override
@@ -167,11 +180,11 @@ public class NotificationServiceImpl implements NotificationService {
                 appointment.getRequestedTime().toString());
         
         createNotification(serviceProvider, title, message, NotificationType.NEW_APPOINTMENT_REQUEST);
+        emailService.sendEmail(fromEmail, serviceProvider.getUser().getEmail(), title, message);
     }
     
     @Override
     public void sendSystemMaintenanceNotification(String message) {
-        // Send to all users - this would be called by an admin function
         List<Profile> allProfiles = userRepository.findAll().stream()
                 .map(user -> user.getProfile())
                 .toList();
@@ -179,6 +192,7 @@ public class NotificationServiceImpl implements NotificationService {
         String title = "System Maintenance Notice";
         for (Profile profile : allProfiles) {
             createNotification(profile, title, message, NotificationType.SYSTEM_MAINTENANCE);
+            emailService.sendEmail(fromEmail, profile.getUser().getEmail(), title, message);
         }
     }
     
@@ -189,6 +203,7 @@ public class NotificationServiceImpl implements NotificationService {
                 "If you didn't make these changes, please contact our support team immediately.";
         
         createNotification(recipient, title, message, NotificationType.PROFILE_UPDATE);
+        emailService.sendEmail(fromEmail, recipient.getUser().getEmail(), title, message);
     }
     
     @Override
@@ -201,6 +216,7 @@ public class NotificationServiceImpl implements NotificationService {
                 appointment.getScheduledTime().toString());
         
         createNotification(petOwner, title, message, NotificationType.APPOINTMENT_REMINDER);
+        emailService.sendEmail(fromEmail, petOwner.getUser().getEmail(), title, message);
     }
     
     @Override
