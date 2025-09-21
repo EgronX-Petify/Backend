@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "`order`")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +19,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
+    private Long paymobTrnxOrderId;
 
     @ManyToOne
     @JoinColumn(name = "profile_id")

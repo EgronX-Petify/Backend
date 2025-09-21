@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "cart")
@@ -22,12 +23,27 @@ public class Cart {
     @JoinColumn(name = "profile_id")
     private POProfile profile;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartProduct> cartProducts;
-
-
+    @OneToMany(
+            mappedBy = "cart",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    private Set<CartProduct> cartProducts;
 
     public void addCartProduct(CartProduct cartProduct){
-        this.cartProducts.add(cartProduct);
+        cartProduct.setCart(this);
+        for (CartProduct existing : cartProducts) {
+            if (existing.getProduct().getId().equals(cartProduct.getProduct().getId())) {
+                existing.setQuantity(existing.getQuantity() + cartProduct.getQuantity());
+                return;
+            }
+        }
+        cartProducts.add(cartProduct);
     }
+
+    public void removeCartProduct(Long productId){
+        this.cartProducts.removeIf(
+                cartProduct -> cartProduct.getProduct().getId().equals(productId));
+    }
+
 }

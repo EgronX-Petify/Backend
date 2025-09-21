@@ -24,6 +24,8 @@ public class OrderProduct {
     @JoinColumn(name = "product_id" , nullable = false)
     private Product product;
 
+    private double priceAtOrder;
+
     @Column(nullable = false)
     @Builder.Default
     private int quantity = 1;
