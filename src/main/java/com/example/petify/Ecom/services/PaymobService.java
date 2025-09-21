@@ -9,5 +9,6 @@ import java.util.Map;
 public interface PaymobService {
     String authenticate();
     Map generateIntentionPayment(PaymentDto payment);
+    Map getTransactionByTrnxOrderId(Long trnxOrderId);
     void refund(String transactionId, @NotNull Integer amountInCents);
 }

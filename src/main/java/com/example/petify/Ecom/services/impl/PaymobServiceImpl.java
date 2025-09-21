@@ -99,4 +99,27 @@ public class PaymobServiceImpl implements PaymobService {
             throw new PaymentGatewayException("could not generate intention payment gateway");
         }
     }
+
+    @Override
+    public Map getTransactionByTrnxOrderId(Long trnxOrderId) {
+        var auth_token = this.authenticate();
+        String url = "https://accept.paymob.com/api/ecommerce/orders/transaction_inquiry";
+
+        // Headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Body
+        Map <String, Object> body = new HashMap<>();
+        body.put("auth_token", auth_token);
+        body.put("order_id", trnxOrderId);
+
+        var request = new HttpEntity<>(body, headers);
+        var response = restTemplate.exchange(url, HttpMethod.POST, request, Map.class);
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+            return response.getBody();
+        }else {
+            throw new PaymentGatewayException("could not get transaction.");
+        }
+    }
 }

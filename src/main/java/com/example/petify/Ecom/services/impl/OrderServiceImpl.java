@@ -5,9 +5,11 @@ import com.example.petify.Ecom.dto.OrderFilter;
 import com.example.petify.Ecom.mapper.OrderMapper;
 import com.example.petify.Ecom.services.OrderService;
 import com.example.petify.Ecom.services.PaymobService;
+import com.example.petify.Ecom.specfication.OrderSpecification;
 import com.example.petify.domain.order.model.Order;
 import com.example.petify.domain.order.model.OrderStatus;
 import com.example.petify.domain.order.repository.OrderRepository;
+import com.example.petify.exception.PaymentGatewayException;
 import com.example.petify.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDto> getOrders(OrderFilter orderFilter, Pageable pageable) {
-        return null;
+        return orderRepo.findAll(OrderSpecification.build(orderFilter), pageable).map(OrderMapper::toDto);
     }
 
     @Override
@@ -40,12 +42,13 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepo.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("Order with id: " + id + " not found")
         );
-        order.setStatus(orderStatus);
         if (orderStatus.equals(OrderStatus.CANCELLED)) {
             double amount_in_cents = order.getTotalPrice() * 100;
-//            paymobService.refund(order.getPaymobTrnxOrderId().toString(), (int) amount_in_cents);
-            // TODO: refund
+            String trnxId = paymobService.getTransactionByTrnxOrderId(
+                    order.getPaymobTrnxOrderId()).get("id").toString();
+            paymobService.refund(trnxId, (int) amount_in_cents);
         }
+        order.setStatus(orderStatus);
         orderRepo.save(order);
         return OrderMapper.toDto(order);
     }
