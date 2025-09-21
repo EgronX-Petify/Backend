@@ -26,16 +26,12 @@ import java.util.Map;
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
+    private final AppConfig appConfig;
     private final AuthenticationService authenticationService;
     private final passwordResetService passwordResetService;
     private final RefreshTokenService refreshTokenService;
 
     private final String refreshTokenCookieName = "refreshToken";
-
-    @Value(value = "${refresh.expirationSec}")
-    private int refreshTokenMaxAge;
-    
-    private final AppConfig appConfig;
 
     @PostMapping(value = "/login")
     public ResponseEntity<LoginResponse> login(HttpServletResponse response, @Valid @RequestBody LoginRequest loginRequest) {
@@ -48,7 +44,7 @@ public class AuthController {
         String refreshToken = refreshTokenService.generateRefreshToken(userDetails.getId());
 
         Cookie refreshTokenCookie = CookieUtils.createCookie(
-                refreshTokenCookieName, refreshToken, "/", refreshTokenMaxAge);
+                refreshTokenCookieName, refreshToken, "/", appConfig.getRefreshExpirationSec());
 
         response.addCookie(refreshTokenCookie);
 
@@ -81,7 +77,7 @@ public class AuthController {
 
         // set the cookie
         Cookie cookie = CookieUtils.createCookie(
-                refreshTokenCookieName, rotatedToken.getToken(), "/", refreshTokenMaxAge);
+                refreshTokenCookieName, rotatedToken.getToken(), "/", appConfig.getRefreshExpirationSec());
         response.addCookie(cookie);
 
         return ResponseEntity.status(HttpStatus.OK).body(

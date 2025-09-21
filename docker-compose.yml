@@ -6,6 +6,8 @@ services:
     container_name: petify
     env_file:
       - .env
+    environment:
+      DB_URL: "mysql://db:3306/petify"
     ports:
       - "8080:8080"
     depends_on:

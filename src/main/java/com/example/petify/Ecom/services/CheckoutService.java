@@ -6,5 +6,4 @@ import com.example.petify.Ecom.dto.OrderDto;
 
 public interface CheckoutService {
     public CheckoutResponse Checkout(Long userId, CheckoutDto data);
-    public void CallBackWebHook(Object json);
 }

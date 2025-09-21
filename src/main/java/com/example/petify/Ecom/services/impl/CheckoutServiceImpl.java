@@ -90,7 +90,7 @@ public class CheckoutServiceImpl implements CheckoutService {
                                 .email(user.getEmail())
                                 .firstName(((POProfile) user.getProfile()).getName())
                                 .lastName("--")
-                                .phoneNumber(user.getPhoneNumber())
+                                .phoneNumber(user.getProfile().getPhoneNumber())
                                 .build())
                         .notificationUrl(appConfig.getWebhookUrl())
                         .build()
@@ -111,9 +111,5 @@ public class CheckoutServiceImpl implements CheckoutService {
                 .paymentUrl(paymentUrl)
                 .order(OrderMapper.toDto(order))
                 .build();
-    }
-
-    @Override
-    public void CallBackWebHook(Object json) {
     }
 }
