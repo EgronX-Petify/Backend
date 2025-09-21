@@ -28,9 +28,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String phoneNumber;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
@@ -40,9 +37,6 @@ public class User {
     @CreationTimestamp
     @Column(name= "created_at",nullable = false,  updatable = false)
     private LocalDateTime createdAt;
-
-
-
 
     @OneToOne(mappedBy = "user" , cascade = CascadeType.ALL , orphanRemoval = true)
     Profile profile;
