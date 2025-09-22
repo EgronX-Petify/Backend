@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Component
 @ConfigurationProperties(prefix = "app")
 public class AppConfig {
+    private String frontUrl;
     private int refreshExpirationSec;
     private boolean isDev;
   
