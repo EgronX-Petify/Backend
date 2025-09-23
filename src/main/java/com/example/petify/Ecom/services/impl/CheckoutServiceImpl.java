@@ -66,8 +66,11 @@ public class CheckoutServiceImpl implements CheckoutService {
         double totalPrice = 0;
         for (CartProduct cartProduct : cart.getCartProducts()) {
             var product = cartProduct.getProduct();
-            if (product.getStock() < cartProduct.getQuantity()) {
-                throw new InvalidParameterException("insufficient stock for product with id: " + product.getId());
+            try {
+                product.reserveStock(cartProduct.getQuantity());
+                productRepository.save(product);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
             totalPrice += product.getPrice() * (1 - product.getDiscount() / 100);
             order.addOrderProduct(OrderProduct.builder()
@@ -76,9 +79,7 @@ public class CheckoutServiceImpl implements CheckoutService {
                     .priceAtOrder(product.getPrice())
                     .build());
         }
-
-        // get total price
-        order.setStatus(OrderStatus.PENDING);
+        order.setStatus(OrderStatus.PENDING_PAYMENT);
         order.setTotalPrice(totalPrice);
 
         // generate payment link

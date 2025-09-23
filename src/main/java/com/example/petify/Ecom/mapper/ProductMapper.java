@@ -23,7 +23,7 @@ public class ProductMapper {
                 .price(product.getPrice())
                 .discount(product.getDiscount())
                 .final_price(product.getPrice() * (1 - product.getDiscount() / 100))
-                .stock(product.getStock())
+                .stock(product.getAvailableStock())
                 .tags(tags)
                 .images(product.getImageUrls())
                 .build();
