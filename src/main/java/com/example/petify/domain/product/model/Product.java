@@ -60,6 +60,7 @@ public class Product {
 
     private int stock;
 
+    private int reservedStock;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -69,4 +70,31 @@ public class Product {
 
     @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL , orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Review> reviews = new HashSet<>();
+
+    public int getAvailableStock() {
+        return stock - reservedStock;
+    }
+
+    public void reserveStock(int qty) throws Exception {
+        if (qty > getAvailableStock()) {
+            throw new Exception("Not enough stock available");
+        }
+        reservedStock += qty;
+    }
+
+    public void releaseReservedStock(int qty) throws Exception {
+        if (qty > reservedStock) {
+            throw new Exception("Not enough reserved stock to release");
+        }
+        reservedStock -= qty;
+    }
+
+    public void confirmSale(int qty) throws Exception {
+        if (qty > reservedStock) {
+            throw new Exception("Trying to confirm more than reserved");
+        }
+        reservedStock -= qty;
+        stock -= qty;
+    }
+
 }

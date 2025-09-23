@@ -1,9 +1,10 @@
 package com.example.petify.domain.order.model;
 
 public enum OrderStatus {
-    PENDING,
-    CONFIRMED,
+    PENDING_PAYMENT,
+    PAID,
     IN_PROGRESS,
-    COMPLETED,
+    DELIVERED,
+    REFUNDED,
     CANCELLED
 }
