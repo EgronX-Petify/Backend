@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -35,6 +37,24 @@ public class GlobalExceptionHandler {
         APIErrorResponse err = APIErrorResponse.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .message("Invalid username or password.")
+                .build();
+        return new ResponseEntity<>(err, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(value = LockedException.class)
+    public ResponseEntity<APIErrorResponse> handleException(LockedException e) {
+        APIErrorResponse err = APIErrorResponse.builder()
+                .status(HttpStatus.LOCKED.value())
+                .message("User account is banned.")
+                .build();
+        return new ResponseEntity<>(err, HttpStatus.LOCKED);
+    }
+
+    @ExceptionHandler(value = DisabledException.class)
+    public ResponseEntity<APIErrorResponse> handleException(DisabledException e) {
+        APIErrorResponse err = APIErrorResponse.builder()
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .message("Account is pending approval.")
                 .build();
         return new ResponseEntity<>(err, HttpStatus.UNAUTHORIZED);
     }

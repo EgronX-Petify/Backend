@@ -19,6 +19,7 @@ import com.example.petify.domain.user.model.RefreshToken;
 import com.example.petify.domain.user.repository.PasswordResetTokenRepository;
 import com.example.petify.domain.user.model.Role;
 import com.example.petify.domain.user.model.User;
+import com.example.petify.domain.user.model.UserStatus;
 import com.example.petify.domain.user.repository.RefreshTokenRepository;
 import com.example.petify.domain.user.repository.UserRepository;
 import com.example.petify.exception.InvalidTokenException;
@@ -71,32 +72,50 @@ public class UserService
         if (userRepo.existsByEmail(signupRequest.getEmail())) {
             throw new UsernameAlreadyExistsException("Email Already Exists");
         }
-        Profile profile= null;
-        if(Role.getRole(signupRequest.getRole()) == Role.SERVICE_PROVIDER){
+        
+        Role requestedRole = Role.getRole(signupRequest.getRole());
+        
+        // Prevent admin signup via public endpoint
+        if (requestedRole == Role.ADMIN) {
+            throw new IllegalArgumentException("Admin registration not allowed");
+        }
+        
+        Profile profile = null;
+        UserStatus status;
+        String responseMessage;
+        boolean isPending = false;
+        
+        if (requestedRole == Role.SERVICE_PROVIDER) {
             profile = new SPProfile();
-        }
-        else if (Role.getRole(signupRequest.getRole()) == Role.PET_OWNER){
+            status = UserStatus.PENDING;
+            responseMessage = "Service provider account created. Awaiting admin approval.";
+            isPending = true;
+        } else if (requestedRole == Role.PET_OWNER) {
             profile = new POProfile();
-        }
-        else if (Role.getRole(signupRequest.getRole()) == Role.ADMIN){
-            profile = new AdminProfile();
+            status = UserStatus.ACTIVE;
+            responseMessage = "User Successfully Registered";
+        } else {
+            throw new IllegalArgumentException("Invalid role for registration");
         }
 
         User user = User.builder()
                 .email(signupRequest.getEmail())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
-                .role(Role.getRole(signupRequest.getRole()))
+                .role(requestedRole)
+                .status(status)
                 .profile(profile)
                 .build();
         profile.setUser(user);
         userRepo.save(user);
         
-        // Send welcome notification
-        notificationService.sendWelcomeNotification(profile);
-
+        // Send welcome notification only for active users
+        if (status == UserStatus.ACTIVE) {
+            notificationService.sendWelcomeNotification(profile);
+        }
 
         return SignupResponse.builder()
-                .message("User Successfully Registered")
+                .message(responseMessage)
+                .isPending(isPending)
                 .build();
     }
 

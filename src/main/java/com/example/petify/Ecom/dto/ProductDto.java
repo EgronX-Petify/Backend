@@ -1,5 +1,6 @@
 package com.example.petify.Ecom.dto;
 
+import com.example.petify.domain.product.model.ProductImage;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -39,5 +41,5 @@ public class ProductDto {
     private String category;
 
     private List<String> tags;
-    private List<String> images;
+    private Set<ProductImage> images;
 }

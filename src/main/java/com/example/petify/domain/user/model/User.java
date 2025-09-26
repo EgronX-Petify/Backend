@@ -32,6 +32,10 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private UserStatus status;
+
     @CreationTimestamp
     @Column(name= "created_at",nullable = false,  updatable = false)
     private LocalDateTime createdAt;

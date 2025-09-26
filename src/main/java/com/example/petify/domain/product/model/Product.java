@@ -89,4 +89,8 @@ public class Product {
         stock -= qty;
     }
 
+    public void addImage(ProductImage image) {
+        images.add(image);
+    }
+
 }

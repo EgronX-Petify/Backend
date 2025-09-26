@@ -8,4 +8,5 @@ import lombok.Data;
 @Builder
 public class SignupResponse {
     private String message;
+    private boolean isPending;
 }

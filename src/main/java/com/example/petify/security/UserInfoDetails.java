@@ -2,6 +2,7 @@ package com.example.petify.security;
 
 import com.example.petify.domain.profile.model.Profile;
 import com.example.petify.domain.user.model.User;
+import com.example.petify.domain.user.model.UserStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -47,7 +48,7 @@ public class UserInfoDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return user.getStatus() != UserStatus.BANNED;
     }
 
     @Override
@@ -57,6 +58,6 @@ public class UserInfoDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return user.getStatus() == UserStatus.ACTIVE;
     }
 }
