@@ -1,8 +1,7 @@
 package com.example.petify.common.services.impl;
 
 import com.example.petify.common.services.EmailService;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,8 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-@Data
-@Slf4j
+@RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
 
@@ -23,7 +21,6 @@ public class EmailServiceImpl implements EmailService {
         mailMessage.setText(Body);
 
         mailSender.send(mailMessage);
-        log.info("Sent mail message to {} ", (Object) mailMessage.getTo());
 
         return ResponseEntity
                 .status(HttpStatus.OK)

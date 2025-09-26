@@ -24,11 +24,36 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "service_id" , nullable = false)
-    private Service service;
+    private Services service;
 
-    private LocalDateTime time;
-    private String status;
+    private LocalDateTime requestedTime;
+
+    private LocalDateTime scheduledTime;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private AppointmentStatus status = AppointmentStatus.PENDING;
 
     @Column
     private String notes;
+    
+    @Column
+    private String rejectionReason;
+    
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+    
+    @Column
+    private LocalDateTime updatedAt;
+    
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+    
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

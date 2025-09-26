@@ -1,6 +1,7 @@
 package com.example.petify.domain.profile.model;
 
 import com.example.petify.domain.product.model.Product;
+import com.example.petify.domain.service.model.Services;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,21 +17,23 @@ import java.util.Set;
 @Setter
 public class SPProfile extends Profile {
 
-    @Column(name = "business_name")
-    private String businessName;
+
 
     @Column
     private String description;
 
+    @Column(name = "contact_info")
+    private String contactInfo;
+
     @OneToMany(mappedBy = "provider" , cascade = CascadeType.ALL , orphanRemoval = true)
-    private Set<Branch> branches = new HashSet<>();
+    private Set<Services> services = new HashSet<>();
 
     @OneToMany(mappedBy = "seller" , cascade = CascadeType.ALL , orphanRemoval = true)
     private Set<Product> products = new HashSet<>();
 
 
-    public void addBranch(Branch branch){
-        this.branches.add(branch);
+    public void addBranch(Services service){
+        this.services.add(service);
     }
 
     public void addProduct(Product product){

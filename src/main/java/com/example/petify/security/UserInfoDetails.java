@@ -1,5 +1,6 @@
 package com.example.petify.security;
 
+import com.example.petify.domain.profile.model.Profile;
 import com.example.petify.domain.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,6 +34,10 @@ public class UserInfoDetails implements UserDetails {
 
     public Long getId() {
         return user.getId();
+    }
+
+    public Profile getProfile() {
+        return user.getProfile();
     }
 
     @Override

@@ -21,6 +21,6 @@ public class Category {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL , orphanRemoval = true)
+    @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL , orphanRemoval = true , fetch = FetchType.EAGER)
     private Set<Product> products = new HashSet<>();
 }

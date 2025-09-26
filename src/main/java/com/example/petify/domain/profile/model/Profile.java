@@ -4,39 +4,48 @@ package com.example.petify.domain.profile.model;
 import com.example.petify.domain.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "profile")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Profile {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "profile_images",
-            joinColumns = @JoinColumn(name = "profile_id")
-    )
-    @Column(name = "image_url")
-    @OrderColumn(name = "image_index")
-    private List<String> imageUrls = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
+    private Set<ProfileImage> images = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 
 
-    @Column(nullable = false)
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Notification> notifications = new HashSet<>();
+
+    @Column
+    private String name;
+
+    @Column
+    private String address;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    public void addImageUrl(String imageUrl) {
-        this.imageUrls.add(imageUrl);
+
+    public void addImage(ProfileImage image) {
+        this.images.add(image);
+    }
+    public void addNotification(Notification notification){
+        this.notifications.add(notification);
     }
 }

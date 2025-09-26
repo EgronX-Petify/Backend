@@ -18,10 +18,6 @@ import java.util.Set;
 @Setter
 public class POProfile extends Profile {
 
-    private String name;
-
-    private String location;
-
     @OneToMany(mappedBy = "profile" , cascade = CascadeType.ALL , orphanRemoval = true)
     private Set<Pet> pets = new HashSet<>();
 

@@ -1,13 +1,10 @@
 package com.example.petify.domain.product.model;
-
 import com.example.petify.domain.profile.model.Review;
 import com.example.petify.domain.profile.model.SPProfile;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,14 +31,9 @@ public class Product {
     @Column
     private double price;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "product_images",
-            joinColumns = @JoinColumn(name = "product_id")
-    )
-    @Column(name = "image_url")
-    @OrderColumn(name = "image_index")
-    private List<String> imageUrls = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL , orphanRemoval = true , fetch = FetchType.EAGER)
+    private Set<ProductImage> images = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
