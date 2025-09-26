@@ -33,6 +33,11 @@ public interface NotificationService {
     void sendProfileUpdateNotification(Profile recipient);
     void sendAppointmentReminderNotification(Appointment appointment);
     
+    // Admin action notifications
+    void sendServiceProviderApprovedNotification(Profile serviceProviderProfile);
+    void sendUserBannedNotification(Profile userProfile);
+    void sendUserUnbannedNotification(Profile userProfile);
+    
     // Cleanup operations
     void cleanupOldNotifications();
 

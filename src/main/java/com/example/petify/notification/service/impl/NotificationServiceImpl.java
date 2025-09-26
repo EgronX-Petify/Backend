@@ -225,5 +225,40 @@ public class NotificationServiceImpl implements NotificationService {
         notificationRepository.deleteOldReadNotifications(cutoffDate);
     }
 
+    @Override
+    public void sendServiceProviderApprovedNotification(Profile serviceProviderProfile) {
+        String title = "Welcome to Petify! 🎉";
+        String message = String.format("Congratulations, %s! Your service provider account has been approved by our admin team. " +
+                "You can now start offering your services to pet owners in your area. " +
+                "Thank you for joining our community of trusted pet care professionals!",
+                serviceProviderProfile.getName() != null ? serviceProviderProfile.getName() : "Service Provider");
+        
+        createNotification(serviceProviderProfile, title, message, NotificationType.SERVICE_PROVIDER_APPROVED);
+        emailService.sendEmail(fromEmail, serviceProviderProfile.getUser().getEmail(), title, message);
+    }
+    
+    @Override
+    public void sendUserBannedNotification(Profile userProfile) {
+        String title = "Account Suspended";
+        String message = String.format("Dear %s, your Petify account has been suspended due to violations of our terms of service. " +
+                "If you believe this is a mistake or would like to appeal this decision, please contact our support team. " +
+                "We appreciate your understanding.",
+                userProfile.getName() != null ? userProfile.getName() : "User");
+        
+        createNotification(userProfile, title, message, NotificationType.USER_BANNED);
+        emailService.sendEmail(fromEmail, userProfile.getUser().getEmail(), title, message);
+    }
+    
+    @Override
+    public void sendUserUnbannedNotification(Profile userProfile) {
+        String title = "Account Reactivated ✅";
+        String message = String.format("Good news, %s! Your Petify account has been reactivated. " +
+                "You can now access all features and services again. " +
+                "We're glad to have you back in our pet care community!",
+                userProfile.getName() != null ? userProfile.getName() : "User");
+        
+        createNotification(userProfile, title, message, NotificationType.USER_UNBANNED);
+        emailService.sendEmail(fromEmail, userProfile.getUser().getEmail(), title, message);
+    }
 
 }

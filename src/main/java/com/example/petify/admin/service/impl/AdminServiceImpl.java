@@ -12,6 +12,7 @@ import com.example.petify.domain.user.model.UserStatus;
 import com.example.petify.domain.user.repository.RefreshTokenRepository;
 import com.example.petify.domain.user.repository.UserRepository;
 import com.example.petify.exception.ResourceNotFoundException;
+import com.example.petify.notification.service.NotificationService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class AdminServiceImpl implements AdminService {
     private final ProductRepository productRepository;
     private final ServiceRepository serviceRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final NotificationService notificationService;
 
     @Override
     @Transactional
@@ -51,6 +53,9 @@ public class AdminServiceImpl implements AdminService {
         user.setStatus(UserStatus.ACTIVE);
         userRepository.save(user);
         
+        // Send welcome notification and email to the approved service provider
+        notificationService.sendServiceProviderApprovedNotification(user.getProfile());
+        
         return AdminActionResponse.builder()
                 .message("Service provider approved successfully")
                 .success(true)
@@ -71,6 +76,9 @@ public class AdminServiceImpl implements AdminService {
             token.setRevoked(true);
             refreshTokenRepository.save(token);
         });
+        
+        // Send ban notification and email to the user
+        notificationService.sendUserBannedNotification(user.getProfile());
         
         return AdminActionResponse.builder()
                 .message("User banned successfully")
@@ -93,6 +101,9 @@ public class AdminServiceImpl implements AdminService {
         
         user.setStatus(UserStatus.ACTIVE);
         userRepository.save(user);
+        
+        // Send unban notification and email to the user
+        notificationService.sendUserUnbannedNotification(user.getProfile());
         
         return AdminActionResponse.builder()
                 .message("User unbanned successfully")
