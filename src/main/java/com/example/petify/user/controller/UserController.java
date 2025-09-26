@@ -66,7 +66,7 @@ public class UserController {
 
     @DeleteMapping("/me/image/{imageId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'SERVICE_PROVIDER', 'PET_OWNER')")
-    public ResponseEntity<Void> deletePetImage(@PathVariable Long imageId)
+    public ResponseEntity<Void> deleteProfileImage(@PathVariable Long imageId)
     {
         userService.deleteImage(imageId);
         return ResponseEntity.noContent().build();

@@ -95,6 +95,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteImage(Long imageId) {
         User user = authenticatedUserService.getCurrentUser();
         Profile profile = user.getProfile();
@@ -103,7 +104,10 @@ public class UserServiceImpl implements UserService {
         if(!image.getProfile().getId().equals(profile.getId())) {
             throw new IllegalArgumentException("User is not the owner of this image");
         }
+
+        profile.getImages().remove(image);
         profileImageRepository.deleteById(imageId);
+        profileImageRepository.flush();
     }
 
 }
