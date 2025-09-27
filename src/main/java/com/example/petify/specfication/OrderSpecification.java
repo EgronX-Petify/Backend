@@ -1,8 +1,8 @@
-package com.example.petify.Ecom.specfication;
+package com.example.petify.specfication;
 
-import com.example.petify.Ecom.dto.OrderFilter;
-import com.example.petify.domain.order.model.Order;
-import com.example.petify.domain.order.model.OrderProduct;
+import com.example.petify.dto.ecom.OrderFilter;
+import com.example.petify.model.order.Order;
+import com.example.petify.model.order.OrderProduct;
 import org.springframework.data.jpa.domain.Specification;
 
 import jakarta.persistence.criteria.Join;

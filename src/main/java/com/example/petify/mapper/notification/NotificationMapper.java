@@ -1,8 +1,8 @@
-package com.example.petify.notification.mapper;
+package com.example.petify.mapper.notification;
 
-import com.example.petify.domain.profile.model.Notification;
-import com.example.petify.notification.dto.NotificationListResponse;
-import com.example.petify.notification.dto.NotificationResponse;
+import com.example.petify.model.profile.Notification;
+import com.example.petify.dto.notification.NotificationListResponse;
+import com.example.petify.dto.notification.NotificationResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 

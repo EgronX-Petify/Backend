@@ -1,17 +1,15 @@
-package com.example.petify.Ecom.services.impl;
+package com.example.petify.service.ecom.impl;
 
-import com.example.petify.Ecom.dto.OrderDto;
-import com.example.petify.Ecom.dto.OrderFilter;
-import com.example.petify.Ecom.mapper.OrderMapper;
-import com.example.petify.Ecom.services.OrderService;
-import com.example.petify.Ecom.services.PaymobService;
-import com.example.petify.Ecom.specfication.OrderSpecification;
-import com.example.petify.domain.order.model.Order;
-import com.example.petify.domain.order.model.OrderStatus;
-import com.example.petify.domain.order.repository.OrderRepository;
-import com.example.petify.exception.PaymentGatewayException;
+import com.example.petify.dto.ecom.OrderDto;
+import com.example.petify.dto.ecom.OrderFilter;
+import com.example.petify.mapper.ecom.OrderMapper;
+import com.example.petify.service.ecom.OrderService;
+import com.example.petify.service.ecom.PaymobService;
+import com.example.petify.specfication.OrderSpecification;
+import com.example.petify.model.order.Order;
+import com.example.petify.model.order.OrderStatus;
+import com.example.petify.repository.order.OrderRepository;
 import com.example.petify.exception.ResourceNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

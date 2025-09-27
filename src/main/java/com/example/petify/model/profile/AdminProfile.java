@@ -1,4 +1,4 @@
-package com.example.petify.domain.profile.model;
+package com.example.petify.model.profile;
 
 import jakarta.persistence.*;
 import lombok.*;

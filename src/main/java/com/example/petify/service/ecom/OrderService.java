@@ -1,8 +1,8 @@
-package com.example.petify.Ecom.services;
+package com.example.petify.service.ecom;
 
-import com.example.petify.Ecom.dto.OrderDto;
-import com.example.petify.Ecom.dto.OrderFilter;
-import com.example.petify.domain.order.model.OrderStatus;
+import com.example.petify.dto.ecom.OrderDto;
+import com.example.petify.dto.ecom.OrderFilter;
+import com.example.petify.model.order.OrderStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

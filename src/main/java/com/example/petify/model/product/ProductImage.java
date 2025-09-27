@@ -1,4 +1,4 @@
-package com.example.petify.domain.product.model;
+package com.example.petify.model.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

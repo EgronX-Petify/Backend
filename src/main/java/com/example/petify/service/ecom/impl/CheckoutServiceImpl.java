@@ -1,30 +1,29 @@
-package com.example.petify.Ecom.services.impl;
+package com.example.petify.service.ecom.impl;
 
-import com.example.petify.Ecom.dto.CheckoutDto;
-import com.example.petify.Ecom.dto.CheckoutResponse;
-import com.example.petify.Ecom.dto.PaymentDto;
-import com.example.petify.Ecom.mapper.OrderMapper;
-import com.example.petify.Ecom.services.CheckoutService;
-import com.example.petify.Ecom.services.PaymobService;
+import com.example.petify.dto.ecom.CheckoutDto;
+import com.example.petify.dto.ecom.CheckoutResponse;
+import com.example.petify.dto.ecom.PaymentDto;
+import com.example.petify.mapper.ecom.OrderMapper;
+import com.example.petify.service.ecom.CheckoutService;
+import com.example.petify.service.ecom.PaymobService;
 import com.example.petify.config.AppConfig;
-import com.example.petify.domain.cart.model.Cart;
-import com.example.petify.domain.cart.model.CartProduct;
-import com.example.petify.domain.cart.repository.CartRepository;
-import com.example.petify.domain.order.model.Order;
-import com.example.petify.domain.order.model.OrderProduct;
-import com.example.petify.domain.order.model.OrderStatus;
-import com.example.petify.domain.order.repository.OrderRepository;
-import com.example.petify.domain.product.repository.ProductRepository;
-import com.example.petify.domain.profile.model.POProfile;
-import com.example.petify.domain.user.model.User;
-import com.example.petify.domain.user.repository.UserRepository;
+import com.example.petify.model.cart.Cart;
+import com.example.petify.model.cart.CartProduct;
+import com.example.petify.repository.cart.CartRepository;
+import com.example.petify.model.order.Order;
+import com.example.petify.model.order.OrderProduct;
+import com.example.petify.model.order.OrderStatus;
+import com.example.petify.repository.order.OrderRepository;
+import com.example.petify.repository.product.ProductRepository;
+import com.example.petify.model.profile.POProfile;
+import com.example.petify.model.user.User;
+import com.example.petify.repository.user.UserRepository;
 import com.example.petify.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
-import java.security.InvalidParameterException;
 import java.util.HashSet;
 import java.util.List;
 

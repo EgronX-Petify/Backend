@@ -1,8 +1,8 @@
-package com.example.petify.Ecom.controller;
+package com.example.petify.controller.ecom;
 
-import com.example.petify.Ecom.dto.CartDto;
-import com.example.petify.Ecom.dto.UpdateCartItemQuantityRequest;
-import com.example.petify.Ecom.services.CartService;
+import com.example.petify.dto.ecom.CartDto;
+import com.example.petify.dto.ecom.UpdateCartItemQuantityRequest;
+import com.example.petify.service.ecom.CartService;
 import com.example.petify.config.security.UserInfoDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

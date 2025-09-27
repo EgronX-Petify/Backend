@@ -1,6 +1,6 @@
-package com.example.petify.auth.services;
+package com.example.petify.service.auth;
 
-import com.example.petify.auth.dto.ChangePassTokenResponse;
+import com.example.petify.dto.auth.ChangePassTokenResponse;
 
 public interface passwordResetService {
     public ChangePassTokenResponse ResetPassword(String email);

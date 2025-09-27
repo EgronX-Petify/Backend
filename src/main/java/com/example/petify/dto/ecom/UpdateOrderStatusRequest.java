@@ -1,6 +1,6 @@
-package com.example.petify.Ecom.dto;
+package com.example.petify.dto.ecom;
 
-import com.example.petify.domain.order.model.OrderStatus;
+import com.example.petify.model.order.OrderStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;

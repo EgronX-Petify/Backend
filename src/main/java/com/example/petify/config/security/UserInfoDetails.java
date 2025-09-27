@@ -1,8 +1,8 @@
-package com.example.petify.security;
+package com.example.petify.config.security;
 
-import com.example.petify.domain.profile.model.Profile;
-import com.example.petify.domain.user.model.User;
-import com.example.petify.domain.user.model.UserStatus;
+import com.example.petify.model.profile.Profile;
+import com.example.petify.model.user.User;
+import com.example.petify.model.user.UserStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

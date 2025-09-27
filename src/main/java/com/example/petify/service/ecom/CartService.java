@@ -1,6 +1,6 @@
-package com.example.petify.Ecom.services;
+package com.example.petify.service.ecom;
 
-import com.example.petify.Ecom.dto.CartDto;
+import com.example.petify.dto.ecom.CartDto;
 
 public interface CartService {
     CartDto getCart(Long cartId);

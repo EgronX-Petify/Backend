@@ -1,11 +1,10 @@
-package com.example.petify.pet.service;
+package com.example.petify.service.pet;
 
-import com.example.petify.pet.dto.AppointmentResponse;
-import com.example.petify.pet.dto.ApproveAppointmentRequest;
-import com.example.petify.pet.dto.CreateAppointmentRequest;
-import com.example.petify.pet.dto.RejectAppointmentRequest;
+import com.example.petify.dto.pet.AppointmentResponse;
+import com.example.petify.dto.pet.ApproveAppointmentRequest;
+import com.example.petify.dto.pet.CreateAppointmentRequest;
+import com.example.petify.dto.pet.RejectAppointmentRequest;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AppointmentService {

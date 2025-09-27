@@ -1,10 +1,10 @@
-package com.example.petify.pet.controller;
+package com.example.petify.controller.pet;
 
-import com.example.petify.domain.pet.model.PetImage;
-import com.example.petify.pet.dto.CreatePetRequest;
-import com.example.petify.pet.dto.PetResponse;
-import com.example.petify.pet.dto.UpdatePetRequest;
-import com.example.petify.pet.service.PetService;
+import com.example.petify.model.pet.PetImage;
+import com.example.petify.dto.pet.CreatePetRequest;
+import com.example.petify.dto.pet.PetResponse;
+import com.example.petify.dto.pet.UpdatePetRequest;
+import com.example.petify.service.pet.PetService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

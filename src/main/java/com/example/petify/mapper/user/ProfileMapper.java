@@ -1,12 +1,12 @@
-package com.example.petify.user.mapper;
+package com.example.petify.mapper.user;
 
 
-import com.example.petify.domain.profile.model.Profile;
-import com.example.petify.domain.profile.model.SPProfile;
-import com.example.petify.domain.user.model.User;
+import com.example.petify.model.profile.Profile;
+import com.example.petify.model.profile.SPProfile;
+import com.example.petify.model.user.User;
 
-import com.example.petify.user.dto.UpdateUserProfileRequest;
-import com.example.petify.user.dto.UserProfileResponse;
+import com.example.petify.dto.user.UpdateUserProfileRequest;
+import com.example.petify.dto.user.UserProfileResponse;
 import org.springframework.stereotype.Component;
 
 @Component

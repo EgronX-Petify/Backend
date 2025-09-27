@@ -1,7 +1,7 @@
-package com.example.petify.Ecom.controller;
+package com.example.petify.controller.ecom;
 
-import com.example.petify.Ecom.dto.CheckoutDto;
-import com.example.petify.Ecom.services.CheckoutService;
+import com.example.petify.dto.ecom.CheckoutDto;
+import com.example.petify.service.ecom.CheckoutService;
 import com.example.petify.config.security.UserInfoDetails;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;

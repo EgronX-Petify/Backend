@@ -1,7 +1,7 @@
-package com.example.petify.Ecom.mapper;
+package com.example.petify.mapper.ecom;
 
-import com.example.petify.Ecom.dto.CartDto;
-import com.example.petify.domain.cart.model.Cart;
+import com.example.petify.dto.ecom.CartDto;
+import com.example.petify.model.cart.Cart;
 
 public class CartMapper {
     public static CartDto toDto(Cart cart) {

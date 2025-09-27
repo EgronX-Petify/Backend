@@ -1,4 +1,4 @@
-package com.example.petify.Ecom.services;
+package com.example.petify.service.ecom;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

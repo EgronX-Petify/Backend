@@ -1,6 +1,6 @@
-package com.example.petify.domain.service.model;
+package com.example.petify.model.service;
 
-import com.example.petify.domain.pet.model.Pet;
+import com.example.petify.model.pet.Pet;
 import jakarta.persistence.*;
 import lombok.*;
 

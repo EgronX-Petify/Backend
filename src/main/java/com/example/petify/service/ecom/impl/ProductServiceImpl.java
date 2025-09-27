@@ -1,19 +1,19 @@
-package com.example.petify.Ecom.services.impl;
+package com.example.petify.service.ecom.impl;
 
 
-import com.example.petify.Ecom.dto.ProductDto;
-import com.example.petify.Ecom.dto.ProductFilter;
-import com.example.petify.Ecom.mapper.ProductMapper;
-import com.example.petify.Ecom.services.ProductService;
-import com.example.petify.Ecom.specfication.ProductSpecification;
-import com.example.petify.domain.product.model.Category;
-import com.example.petify.domain.product.model.Product;
-import com.example.petify.domain.product.model.Tag;
-import com.example.petify.domain.product.repository.CategoryRepository;
-import com.example.petify.domain.product.repository.ProductRepository;
-import com.example.petify.domain.product.repository.TagRepository;
-import com.example.petify.domain.profile.model.SPProfile;
-import com.example.petify.domain.profile.repository.SPProfileRepository;
+import com.example.petify.dto.ecom.ProductDto;
+import com.example.petify.dto.ecom.ProductFilter;
+import com.example.petify.mapper.ecom.ProductMapper;
+import com.example.petify.service.ecom.ProductService;
+import com.example.petify.specfication.ProductSpecification;
+import com.example.petify.model.product.Category;
+import com.example.petify.model.product.Product;
+import com.example.petify.model.product.Tag;
+import com.example.petify.repository.product.CategoryRepository;
+import com.example.petify.repository.product.ProductRepository;
+import com.example.petify.repository.product.TagRepository;
+import com.example.petify.model.profile.SPProfile;
+import com.example.petify.repository.profile.SPProfileRepository;
 import com.example.petify.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -113,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (productDto.getImages() != null) {
-            product.setImageUrls(new ArrayList<>(productDto.getImages()));
+            product.setImages(productDto.getImages());
         }
     }
 }

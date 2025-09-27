@@ -1,10 +1,9 @@
-package com.example.petify.Ecom.controller;
+package com.example.petify.controller.ecom;
 
 
-import com.example.petify.Ecom.dto.ProductDto;
-import com.example.petify.Ecom.dto.ProductFilter;
-import com.example.petify.Ecom.services.ProductService;
-import jakarta.validation.constraints.Null;
+import com.example.petify.dto.ecom.ProductDto;
+import com.example.petify.dto.ecom.ProductFilter;
+import com.example.petify.service.ecom.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

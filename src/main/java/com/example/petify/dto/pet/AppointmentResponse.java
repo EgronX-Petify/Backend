@@ -1,4 +1,4 @@
-package com.example.petify.pet.dto;
+package com.example.petify.dto.pet;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

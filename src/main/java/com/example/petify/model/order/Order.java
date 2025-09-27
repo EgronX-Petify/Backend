@@ -1,6 +1,6 @@
-package com.example.petify.domain.order.model;
+package com.example.petify.model.order;
 
-import com.example.petify.domain.profile.model.POProfile;
+import com.example.petify.model.profile.POProfile;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

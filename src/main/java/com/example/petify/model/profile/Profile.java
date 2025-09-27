@@ -1,7 +1,7 @@
-package com.example.petify.domain.profile.model;
+package com.example.petify.model.profile;
 
 
-import com.example.petify.domain.user.model.User;
+import com.example.petify.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.HashSet;

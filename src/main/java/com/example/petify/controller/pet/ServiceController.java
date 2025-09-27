@@ -1,13 +1,13 @@
-package com.example.petify.pet.controller;
+package com.example.petify.controller.pet;
 
-import com.example.petify.domain.service.model.ServiceCategory;
-import com.example.petify.pet.dto.AppointmentResponse;
-import com.example.petify.pet.dto.ApproveAppointmentRequest;
-import com.example.petify.pet.dto.CreateServiceRequest;
-import com.example.petify.pet.dto.RejectAppointmentRequest;
-import com.example.petify.pet.dto.ServiceResponse;
-import com.example.petify.pet.service.AppointmentService;
-import com.example.petify.pet.service.ServiceService;
+import com.example.petify.model.service.ServiceCategory;
+import com.example.petify.dto.pet.AppointmentResponse;
+import com.example.petify.dto.pet.ApproveAppointmentRequest;
+import com.example.petify.dto.pet.CreateServiceRequest;
+import com.example.petify.dto.pet.RejectAppointmentRequest;
+import com.example.petify.dto.pet.ServiceResponse;
+import com.example.petify.service.pet.AppointmentService;
+import com.example.petify.service.pet.ServiceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

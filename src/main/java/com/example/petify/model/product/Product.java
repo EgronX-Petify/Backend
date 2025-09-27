@@ -1,6 +1,6 @@
-package com.example.petify.domain.product.model;
-import com.example.petify.domain.profile.model.Review;
-import com.example.petify.domain.profile.model.SPProfile;
+package com.example.petify.model.product;
+import com.example.petify.model.profile.Review;
+import com.example.petify.model.profile.SPProfile;
 import jakarta.persistence.*;
 import lombok.*;
 

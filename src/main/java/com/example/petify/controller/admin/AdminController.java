@@ -1,10 +1,10 @@
-package com.example.petify.admin.controller;
+package com.example.petify.controller.admin;
 
-import com.example.petify.admin.dto.AdminActionResponse;
-import com.example.petify.admin.dto.UserStatusCountDto;
-import com.example.petify.admin.dto.UserSummaryDto;
-import com.example.petify.admin.service.AdminService;
-import com.example.petify.domain.user.model.UserStatus;
+import com.example.petify.dto.admin.AdminActionResponse;
+import com.example.petify.dto.admin.UserStatusCountDto;
+import com.example.petify.dto.admin.UserSummaryDto;
+import com.example.petify.service.admin.AdminService;
+import com.example.petify.model.user.UserStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

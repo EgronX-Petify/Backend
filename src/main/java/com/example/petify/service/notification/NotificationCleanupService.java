@@ -1,4 +1,4 @@
-package com.example.petify.notification.service;
+package com.example.petify.service.notification;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;

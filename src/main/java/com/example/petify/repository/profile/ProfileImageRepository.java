@@ -1,4 +1,4 @@
-package com.example.petify.domain.profile.repository;
+package com.example.petify.repository.profile;
 
 import com.example.petify.model.profile.Profile;
 import com.example.petify.model.profile.ProfileImage;

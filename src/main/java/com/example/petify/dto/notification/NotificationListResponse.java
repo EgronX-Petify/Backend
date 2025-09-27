@@ -1,4 +1,4 @@
-package com.example.petify.notification.dto;
+package com.example.petify.dto.notification;
 
 import lombok.Builder;
 import lombok.Data;

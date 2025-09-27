@@ -1,4 +1,4 @@
-package com.example.petify.domain.user.model;
+package com.example.petify.model.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

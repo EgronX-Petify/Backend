@@ -1,6 +1,5 @@
 package com.example.petify.model.user;
 
-import com.example.petify.domain.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

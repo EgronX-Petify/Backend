@@ -1,12 +1,12 @@
-package com.example.petify.notification.controller;
+package com.example.petify.controller.notification;
 
 import com.example.petify.service.auth.AuthenticatedUserService;
-import com.example.petify.domain.profile.model.Profile;
-import com.example.petify.notification.service.NotificationService;
-import com.example.petify.domain.user.model.User;
-import com.example.petify.notification.dto.NotificationCountResponse;
-import com.example.petify.notification.dto.NotificationListResponse;
-import com.example.petify.notification.mapper.NotificationMapper;
+import com.example.petify.model.profile.Profile;
+import com.example.petify.service.notification.NotificationService;
+import com.example.petify.model.user.User;
+import com.example.petify.dto.notification.NotificationCountResponse;
+import com.example.petify.dto.notification.NotificationListResponse;
+import com.example.petify.mapper.notification.NotificationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

@@ -1,4 +1,4 @@
-package com.example.petify.security;
+package com.example.petify.config.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,9 +1,9 @@
 package com.example.petify.validation;
 
-import com.example.petify.domain.profile.model.POProfile;
-import com.example.petify.domain.profile.model.SPProfile;
-import com.example.petify.domain.user.model.Role;
-import com.example.petify.domain.user.model.User;
+import com.example.petify.model.profile.POProfile;
+import com.example.petify.model.profile.SPProfile;
+import com.example.petify.model.user.Role;
+import com.example.petify.model.user.User;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

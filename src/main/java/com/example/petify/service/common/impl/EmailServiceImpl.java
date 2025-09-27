@@ -1,6 +1,6 @@
-package com.example.petify.common.services.impl;
+package com.example.petify.service.common.impl;
 
-import com.example.petify.common.services.EmailService;
+import com.example.petify.service.common.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

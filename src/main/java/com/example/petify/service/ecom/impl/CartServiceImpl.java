@@ -1,17 +1,16 @@
-package com.example.petify.Ecom.services.impl;
+package com.example.petify.service.ecom.impl;
 
-import com.example.petify.Ecom.dto.CartDto;
-import com.example.petify.Ecom.mapper.CartMapper;
-import com.example.petify.Ecom.services.CartService;
-import com.example.petify.domain.cart.model.Cart;
-import com.example.petify.domain.cart.model.CartProduct;
-import com.example.petify.domain.cart.repository.CartRepository;
-import com.example.petify.domain.product.model.Product;
-import com.example.petify.domain.product.repository.ProductRepository;
+import com.example.petify.dto.ecom.CartDto;
+import com.example.petify.mapper.ecom.CartMapper;
+import com.example.petify.service.ecom.CartService;
+import com.example.petify.model.cart.Cart;
+import com.example.petify.model.cart.CartProduct;
+import com.example.petify.repository.cart.CartRepository;
+import com.example.petify.model.product.Product;
+import com.example.petify.repository.product.ProductRepository;
 import com.example.petify.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;

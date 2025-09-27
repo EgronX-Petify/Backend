@@ -1,4 +1,4 @@
-package com.example.petify.domain.order.model;
+package com.example.petify.model.order;
 
 public enum OrderStatus {
     PENDING_PAYMENT,

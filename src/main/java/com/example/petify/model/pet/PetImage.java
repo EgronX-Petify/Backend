@@ -1,4 +1,4 @@
-package com.example.petify.domain.pet.model;
+package com.example.petify.model.pet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

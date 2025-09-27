@@ -1,6 +1,6 @@
-package com.example.petify.domain.cart.model;
+package com.example.petify.model.cart;
 
-import com.example.petify.domain.product.model.Product;
+import com.example.petify.model.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
 

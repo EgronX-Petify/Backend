@@ -1,7 +1,7 @@
-package com.example.petify.Ecom.mapper;
+package com.example.petify.mapper.ecom;
 
-import com.example.petify.Ecom.dto.OrderDto;
-import com.example.petify.domain.order.model.Order;
+import com.example.petify.dto.ecom.OrderDto;
+import com.example.petify.model.order.Order;
 
 public class OrderMapper {
     public static OrderDto toDto(Order order) {

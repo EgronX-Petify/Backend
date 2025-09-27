@@ -1,8 +1,8 @@
-package com.example.petify.domain.profile.model;
+package com.example.petify.model.profile;
 
-import com.example.petify.domain.cart.model.Cart;
-import com.example.petify.domain.order.model.Order;
-import com.example.petify.domain.pet.model.Pet;
+import com.example.petify.model.cart.Cart;
+import com.example.petify.model.order.Order;
+import com.example.petify.model.pet.Pet;
 import jakarta.persistence.*;
 import lombok.*;
 

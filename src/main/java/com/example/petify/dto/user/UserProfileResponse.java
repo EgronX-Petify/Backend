@@ -1,6 +1,6 @@
-package com.example.petify.user.dto;
+package com.example.petify.dto.user;
 
-import com.example.petify.domain.profile.model.ProfileImage;
+import com.example.petify.model.profile.ProfileImage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

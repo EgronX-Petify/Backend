@@ -1,4 +1,4 @@
-package com.example.petify.domain.service.model;
+package com.example.petify.model.service;
 
 public enum ServiceCategory {
     VET,

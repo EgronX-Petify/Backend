@@ -1,10 +1,9 @@
-package com.example.petify.domain.service.model;
+package com.example.petify.model.service;
 
-import com.example.petify.domain.profile.model.SPProfile;
+import com.example.petify.model.profile.SPProfile;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 

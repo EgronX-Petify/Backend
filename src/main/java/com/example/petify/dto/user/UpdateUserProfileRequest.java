@@ -1,12 +1,10 @@
-package com.example.petify.user.dto;
+package com.example.petify.dto.user;
 
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @Builder

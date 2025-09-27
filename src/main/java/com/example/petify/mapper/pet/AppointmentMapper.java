@@ -1,7 +1,7 @@
-package com.example.petify.pet.mapper;
+package com.example.petify.mapper.pet;
 
-import com.example.petify.domain.service.model.Appointment;
-import com.example.petify.pet.dto.AppointmentResponse;
+import com.example.petify.model.service.Appointment;
+import com.example.petify.dto.pet.AppointmentResponse;
 import org.springframework.stereotype.Component;
 
 @Component

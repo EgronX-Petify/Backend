@@ -1,6 +1,6 @@
-package com.example.petify.auth.services;
+package com.example.petify.service.auth;
 
-import com.example.petify.domain.user.model.User;
+import com.example.petify.model.user.User;
 
 public interface AuthenticatedUserService {
     public User getCurrentUser();

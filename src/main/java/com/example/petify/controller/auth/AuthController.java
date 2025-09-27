@@ -1,20 +1,19 @@
-package com.example.petify.auth.controller;
+package com.example.petify.controller.auth;
 
 
-import com.example.petify.auth.dto.*;
-import com.example.petify.auth.services.AuthenticationService;
-import com.example.petify.auth.services.RefreshTokenService;
-import com.example.petify.auth.services.passwordResetService;
-import com.example.petify.common.utils.CookieUtils;
-import com.example.petify.domain.user.model.RefreshToken;
+import com.example.petify.service.auth.AuthenticationService;
+import com.example.petify.service.auth.RefreshTokenService;
+import com.example.petify.service.auth.passwordResetService;
+import com.example.petify.utils.CookieUtils;
+import com.example.petify.model.user.RefreshToken;
 import com.example.petify.config.AppConfig;
-import com.example.petify.security.UserInfoDetails;
+import com.example.petify.dto.auth.*;
+import com.example.petify.config.security.UserInfoDetails;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

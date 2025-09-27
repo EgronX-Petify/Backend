@@ -1,8 +1,7 @@
-package com.example.petify.pet.service;
+package com.example.petify.service.pet;
 
-import com.example.petify.pet.dto.CreateServiceRequest;
-import com.example.petify.pet.dto.ServiceResponse;
-import org.springframework.transaction.annotation.Transactional;
+import com.example.petify.dto.pet.CreateServiceRequest;
+import com.example.petify.dto.pet.ServiceResponse;
 
 import java.util.List;
 

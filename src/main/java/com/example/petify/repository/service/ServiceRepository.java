@@ -1,4 +1,4 @@
-package com.example.petify.domain.service.repository;
+package com.example.petify.repository.service;
 
 import com.example.petify.model.profile.Profile;
 import com.example.petify.model.profile.SPProfile;

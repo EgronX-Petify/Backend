@@ -1,14 +1,13 @@
-package com.example.petify.Ecom.controller;
+package com.example.petify.controller.ecom;
 
 
-import com.example.petify.Ecom.dto.OrderDto;
-import com.example.petify.Ecom.dto.OrderFilter;
-import com.example.petify.Ecom.dto.UpdateOrderStatusRequest;
-import com.example.petify.Ecom.services.OrderService;
+import com.example.petify.dto.ecom.OrderDto;
+import com.example.petify.dto.ecom.OrderFilter;
+import com.example.petify.dto.ecom.UpdateOrderStatusRequest;
+import com.example.petify.service.ecom.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

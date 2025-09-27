@@ -1,10 +1,9 @@
-package com.example.petify.domain.cart.model;
+package com.example.petify.model.cart;
 
-import com.example.petify.domain.profile.model.POProfile;
+import com.example.petify.model.profile.POProfile;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity

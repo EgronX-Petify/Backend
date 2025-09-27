@@ -1,7 +1,7 @@
-package com.example.petify.auth.services;
+package com.example.petify.service.auth;
 
 
-import com.example.petify.domain.user.model.RefreshToken;
+import com.example.petify.model.user.RefreshToken;
 
 public interface RefreshTokenService {
     public String generateRefreshToken(Long userId);

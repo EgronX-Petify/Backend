@@ -1,7 +1,7 @@
-package com.example.petify.Ecom.services.impl;
+package com.example.petify.service.ecom.impl;
 
-import com.example.petify.Ecom.dto.PaymentDto;
-import com.example.petify.Ecom.services.PaymobService;
+import com.example.petify.dto.ecom.PaymentDto;
+import com.example.petify.service.ecom.PaymobService;
 import com.example.petify.config.AppConfig;
 import com.example.petify.exception.PaymentGatewayException;
 import com.fasterxml.jackson.databind.ObjectMapper;

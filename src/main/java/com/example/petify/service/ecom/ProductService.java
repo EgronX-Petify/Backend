@@ -1,10 +1,8 @@
-package com.example.petify.Ecom.services;
+package com.example.petify.service.ecom;
 
-import com.example.petify.Ecom.dto.ProductDto;
-import com.example.petify.Ecom.dto.ProductFilter;
+import com.example.petify.dto.ecom.ProductDto;
+import com.example.petify.dto.ecom.ProductFilter;
 import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public interface ProductService {
     ProductDto getProduct(long id);

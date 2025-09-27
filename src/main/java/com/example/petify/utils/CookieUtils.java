@@ -1,4 +1,4 @@
-package com.example.petify.common.utils;
+package com.example.petify.utils;
 
 
 import jakarta.servlet.http.Cookie;

@@ -1,18 +1,18 @@
-package com.example.petify.user.service.impl;
+package com.example.petify.service.user.impl;
 
 import com.example.petify.service.auth.AuthenticatedUserService;
-import com.example.petify.domain.profile.model.Profile;
-import com.example.petify.domain.profile.model.ProfileImage;
-import com.example.petify.domain.profile.repository.ProfileImageRepository;
+import com.example.petify.model.profile.Profile;
+import com.example.petify.model.profile.ProfileImage;
+import com.example.petify.repository.profile.ProfileImageRepository;
 import com.example.petify.service.notification.NotificationService;
-import com.example.petify.domain.user.model.User;
-import com.example.petify.domain.user.repository.UserRepository;
+import com.example.petify.model.user.User;
+import com.example.petify.repository.user.UserRepository;
 import com.example.petify.exception.FileStorageException;
 import com.example.petify.exception.ResourceNotFoundException;
 import com.example.petify.dto.user.UpdateUserProfileRequest;
 import com.example.petify.dto.user.UserProfileResponse;
 import com.example.petify.mapper.user.ProfileMapper;
-import com.example.petify.user.service.UserService;
+import com.example.petify.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,10 +1,7 @@
-package com.example.petify.Ecom.mapper;
+package com.example.petify.mapper.ecom;
 
-import com.example.petify.Ecom.dto.ProductDto;
-import com.example.petify.domain.product.model.Product;
-import com.example.petify.domain.product.repository.ProductRepository;
-import com.example.petify.domain.user.repository.UserRepository;
-import com.example.petify.exception.ResourceNotFoundException;
+import com.example.petify.dto.ecom.ProductDto;
+import com.example.petify.model.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;

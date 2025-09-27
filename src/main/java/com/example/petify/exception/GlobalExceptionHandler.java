@@ -1,7 +1,7 @@
 package com.example.petify.exception;
 
 
-import com.example.petify.common.dto.APIErrorResponse;
+import com.example.petify.dto.common.APIErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

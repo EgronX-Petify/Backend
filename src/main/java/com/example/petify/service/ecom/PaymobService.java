@@ -1,7 +1,6 @@
-package com.example.petify.Ecom.services;
+package com.example.petify.service.ecom;
 
-import com.example.petify.Ecom.dto.PaymentDto;
-import com.example.petify.domain.order.model.Order;
+import com.example.petify.dto.ecom.PaymentDto;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Map;

@@ -1,7 +1,7 @@
-package com.example.petify.domain.pet.model;
+package com.example.petify.model.pet;
 
-import com.example.petify.domain.profile.model.POProfile;
-import com.example.petify.domain.service.model.Appointment;
+import com.example.petify.model.profile.POProfile;
+import com.example.petify.model.service.Appointment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

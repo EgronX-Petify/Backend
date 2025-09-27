@@ -1,9 +1,9 @@
-package com.example.petify.pet.mapper;
+package com.example.petify.mapper.pet;
 
 
-import com.example.petify.domain.pet.model.Pet;
-import com.example.petify.pet.dto.PetResponse;
-import com.example.petify.pet.dto.UpdatePetRequest;
+import com.example.petify.model.pet.Pet;
+import com.example.petify.dto.pet.PetResponse;
+import com.example.petify.dto.pet.UpdatePetRequest;
 import org.springframework.stereotype.Component;
 
 @Component

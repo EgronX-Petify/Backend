@@ -1,13 +1,13 @@
-package com.example.petify.notification.service.impl;
+package com.example.petify.service.notification.impl;
 
-import com.example.petify.common.services.EmailService;
-import com.example.petify.domain.profile.model.Notification;
-import com.example.petify.domain.profile.model.NotificationType;
-import com.example.petify.domain.profile.model.Profile;
-import com.example.petify.domain.profile.repository.NotificationRepository;
-import com.example.petify.notification.service.NotificationService;
-import com.example.petify.domain.service.model.Appointment;
-import com.example.petify.domain.user.repository.UserRepository;
+import com.example.petify.service.common.EmailService;
+import com.example.petify.model.profile.Notification;
+import com.example.petify.model.profile.NotificationType;
+import com.example.petify.model.profile.Profile;
+import com.example.petify.repository.profile.NotificationRepository;
+import com.example.petify.service.notification.NotificationService;
+import com.example.petify.model.service.Appointment;
+import com.example.petify.repository.user.UserRepository;
 import com.example.petify.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,8 +1,8 @@
-package com.example.petify.notification.service;
+package com.example.petify.service.notification;
 
-import com.example.petify.domain.service.model.Appointment;
-import com.example.petify.domain.service.model.AppointmentStatus;
-import com.example.petify.domain.service.repository.AppointmentRepository;
+import com.example.petify.model.service.Appointment;
+import com.example.petify.model.service.AppointmentStatus;
+import com.example.petify.repository.service.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

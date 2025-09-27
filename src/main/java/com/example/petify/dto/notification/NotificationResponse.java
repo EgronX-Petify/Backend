@@ -1,6 +1,6 @@
-package com.example.petify.notification.dto;
+package com.example.petify.dto.notification;
 
-import com.example.petify.domain.profile.model.NotificationType;
+import com.example.petify.model.profile.NotificationType;
 import lombok.Builder;
 import lombok.Data;
 

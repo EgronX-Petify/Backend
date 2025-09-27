@@ -1,8 +1,8 @@
-package com.example.petify.pet.controller;
+package com.example.petify.controller.pet;
 
-import com.example.petify.pet.dto.AppointmentResponse;
-import com.example.petify.pet.dto.CreateAppointmentRequest;
-import com.example.petify.pet.service.AppointmentService;
+import com.example.petify.dto.pet.AppointmentResponse;
+import com.example.petify.dto.pet.CreateAppointmentRequest;
+import com.example.petify.service.pet.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

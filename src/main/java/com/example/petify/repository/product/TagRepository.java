@@ -1,4 +1,4 @@
-package com.example.petify.domain.product.repository;
+package com.example.petify.repository.product;
 
 import com.example.petify.model.product.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,13 +1,12 @@
-package com.example.petify.pet.dto;
+package com.example.petify.dto.pet;
 
-import com.example.petify.domain.pet.model.PetImage;
+import com.example.petify.model.pet.PetImage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Data

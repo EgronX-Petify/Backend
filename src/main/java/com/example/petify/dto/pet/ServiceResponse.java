@@ -1,12 +1,10 @@
-package com.example.petify.pet.dto;
+package com.example.petify.dto.pet;
 
-import com.example.petify.domain.service.model.ServiceCategory;
+import com.example.petify.model.service.ServiceCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 
 @Data
 @Builder

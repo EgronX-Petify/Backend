@@ -1,4 +1,4 @@
-package com.example.petify.domain.user.repository;
+package com.example.petify.repository.user;
 
 import com.example.petify.model.user.PasswordResetToken;
 import org.springframework.data.jpa.repository.JpaRepository;

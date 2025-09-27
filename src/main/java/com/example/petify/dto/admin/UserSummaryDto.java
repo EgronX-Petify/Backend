@@ -1,6 +1,6 @@
-package com.example.petify.admin.dto;
+package com.example.petify.dto.admin;
 
-import com.example.petify.domain.user.model.UserStatus;
+import com.example.petify.model.user.UserStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;

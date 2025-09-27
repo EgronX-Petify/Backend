@@ -1,4 +1,4 @@
-package com.example.petify.security;
+package com.example.petify.config.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

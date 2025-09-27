@@ -1,13 +1,13 @@
-package com.example.petify.Ecom.services.impl;
+package com.example.petify.service.ecom.impl;
 
-import com.example.petify.Ecom.services.PaymobService;
-import com.example.petify.Ecom.services.PaymobWebhook;
-import com.example.petify.domain.order.model.Order;
-import com.example.petify.domain.order.model.OrderStatus;
-import com.example.petify.domain.order.model.PaymentTransaction;
-import com.example.petify.domain.order.repository.OrderRepository;
-import com.example.petify.domain.order.repository.PaymentTransactionRepository;
-import com.example.petify.domain.product.repository.ProductRepository;
+import com.example.petify.service.ecom.PaymobService;
+import com.example.petify.service.ecom.PaymobWebhook;
+import com.example.petify.model.order.Order;
+import com.example.petify.model.order.OrderStatus;
+import com.example.petify.model.order.PaymentTransaction;
+import com.example.petify.repository.order.OrderRepository;
+import com.example.petify.repository.order.PaymentTransactionRepository;
+import com.example.petify.repository.product.ProductRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

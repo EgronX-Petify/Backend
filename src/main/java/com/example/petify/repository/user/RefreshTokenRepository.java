@@ -1,7 +1,7 @@
-package com.example.petify.domain.user.repository;
+package com.example.petify.repository.user;
 
-import com.example.petify.domain.user.model.RefreshToken;
-import com.example.petify.domain.user.model.User;
+import com.example.petify.model.user.RefreshToken;
+import com.example.petify.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

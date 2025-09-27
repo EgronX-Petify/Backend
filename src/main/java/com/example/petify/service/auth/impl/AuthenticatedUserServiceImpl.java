@@ -1,9 +1,9 @@
-package com.example.petify.auth.services.impl;
+package com.example.petify.service.auth.impl;
 
-import com.example.petify.auth.services.AuthenticatedUserService;
-import com.example.petify.domain.user.model.User;
-import com.example.petify.domain.user.repository.UserRepository;
-import com.example.petify.security.UserInfoDetails;
+import com.example.petify.service.auth.AuthenticatedUserService;
+import com.example.petify.model.user.User;
+import com.example.petify.repository.user.UserRepository;
+import com.example.petify.config.security.UserInfoDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

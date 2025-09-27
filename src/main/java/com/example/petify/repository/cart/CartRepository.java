@@ -1,4 +1,4 @@
-package com.example.petify.domain.cart.repository;
+package com.example.petify.repository.cart;
 
 import com.example.petify.model.cart.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;

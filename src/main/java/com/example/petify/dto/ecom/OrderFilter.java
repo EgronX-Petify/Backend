@@ -1,4 +1,4 @@
-package com.example.petify.Ecom.dto;
+package com.example.petify.dto.ecom;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,8 +1,8 @@
-package com.example.petify.Ecom.specfication;
+package com.example.petify.specfication;
 
 
-import com.example.petify.Ecom.dto.ProductFilter;
-import com.example.petify.domain.product.model.Product;
+import com.example.petify.dto.ecom.ProductFilter;
+import com.example.petify.model.product.Product;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;

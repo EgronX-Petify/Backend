@@ -1,9 +1,9 @@
-package com.example.petify.notification.service;
+package com.example.petify.service.notification;
 
-import com.example.petify.domain.profile.model.Notification;
-import com.example.petify.domain.profile.model.NotificationType;
-import com.example.petify.domain.profile.model.Profile;
-import com.example.petify.domain.service.model.Appointment;
+import com.example.petify.model.profile.Notification;
+import com.example.petify.model.profile.NotificationType;
+import com.example.petify.model.profile.Profile;
+import com.example.petify.model.service.Appointment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

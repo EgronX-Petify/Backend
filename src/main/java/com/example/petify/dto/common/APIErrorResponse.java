@@ -1,4 +1,4 @@
-package com.example.petify.common.dto;
+package com.example.petify.dto.common;
 
 
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.petify.domain.service.repository;
+package com.example.petify.repository.service;
 
 import com.example.petify.model.service.Appointment;
 import com.example.petify.model.service.AppointmentStatus;

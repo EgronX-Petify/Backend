@@ -1,8 +1,8 @@
-package com.example.petify.Ecom.utils;
+package com.example.petify.utils.ecom;
 
-import com.example.petify.domain.order.model.OrderStatus;
-import com.example.petify.domain.order.repository.OrderRepository;
-import com.example.petify.domain.product.repository.ProductRepository;
+import com.example.petify.model.order.OrderStatus;
+import com.example.petify.repository.order.OrderRepository;
+import com.example.petify.repository.product.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

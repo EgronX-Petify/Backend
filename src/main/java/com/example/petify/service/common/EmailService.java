@@ -1,4 +1,4 @@
-package com.example.petify.common.services;
+package com.example.petify.service.common;
 
 import org.springframework.http.ResponseEntity;
 
