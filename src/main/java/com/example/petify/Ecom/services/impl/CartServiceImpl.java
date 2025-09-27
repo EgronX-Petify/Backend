@@ -8,6 +8,8 @@ import com.example.petify.domain.cart.model.CartProduct;
 import com.example.petify.domain.cart.repository.CartRepository;
 import com.example.petify.domain.product.model.Product;
 import com.example.petify.domain.product.repository.ProductRepository;
+import com.example.petify.domain.user.model.User;
+import com.example.petify.domain.user.repository.UserRepository;
 import com.example.petify.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.HashSet;
 @Service
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
+    private final UserRepository userRepo;
     private final CartRepository cartRepo;
     private final ProductRepository productRepo;
 
@@ -32,8 +35,16 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartDto getCartByUserId(Long userId) {
-        Cart cart = cartRepo.findByUserId(userId).orElseThrow(
-                () -> new ResourceNotFoundException("Cart not found with user id " + userId)
+        User user = userRepo.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with id " + userId)
+        );
+
+        Cart cart = cartRepo.findByUserId(userId).orElse(
+                cartRepo.save(
+                        Cart.builder()
+                                .user(user)
+                                .cartProducts(new HashSet<>())
+                                .build())
         );
         return CartMapper.toDto(cart);
     }

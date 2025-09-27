@@ -31,10 +31,10 @@ public class OrderSpecification {
         };
     }
 
-    public static Specification<Order> hasBayer(Long poProfileId) {
+    public static Specification<Order> hasBayer(Long userId) {
         return (root, query, cb) -> {
-            if (poProfileId == null) return cb.conjunction();
-            return cb.equal(root.get("profile").get("id"), poProfileId);
+            if (userId == null) return cb.conjunction();
+            return cb.equal(root.get("user").get("id"), userId);
         };
     }
 
@@ -60,8 +60,8 @@ public class OrderSpecification {
         if (filter.getSellerId() != null)
             spec = spec.and(hasSeller(filter.getSellerId()));
 
-        if (filter.getProfileId() != null)
-            spec = spec.and(hasBayer(filter.getProfileId()));
+        if (filter.getUserId() != null)
+            spec = spec.and(hasBayer(filter.getUserId()));
 
         if (filter.getStartDate() != null || filter.getEndDate() != null)
             spec = spec.and(inTimeSpan(filter.getStartDate(), filter.getEndDate()));

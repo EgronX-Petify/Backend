@@ -56,7 +56,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         // create order
         Order order = Order.builder()
-                .profile((POProfile) user.getProfile())
+                .user(user)
                 .address(data.getAddress())
                 .contactInfo(data.getContactInfo())
                 .notes(data.getNotes())

@@ -1,6 +1,7 @@
 package com.example.petify.domain.order.model;
 
 import com.example.petify.domain.profile.model.POProfile;
+import com.example.petify.domain.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,8 +25,8 @@ public class Order {
     private Long paymobTrnxOrderId;
 
     @ManyToOne
-    @JoinColumn(name = "profile_id")
-    private POProfile profile;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "contact_info")
     private String contactInfo;

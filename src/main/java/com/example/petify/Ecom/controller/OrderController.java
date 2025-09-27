@@ -41,7 +41,7 @@ public class OrderController {
             @RequestParam(defaultValue = "10") int size
     ) {
         OrderFilter filter = new OrderFilter();
-        filter.setProfileId(buyerId);
+        filter.setUserId(buyerId);
         filter.setProductId(productId);
         filter.setSellerId(sellerId);
         filter.setStartDate(startDate);

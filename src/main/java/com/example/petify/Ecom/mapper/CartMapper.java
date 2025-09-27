@@ -6,7 +6,7 @@ import com.example.petify.domain.cart.model.Cart;
 public class CartMapper {
     public static CartDto toDto(Cart cart) {
         CartDto cartDto =  CartDto.builder()
-                .userId(cart.getProfile().getId())
+                .userId(cart.getUser().getId())
                 .build();
         cart.getCartProducts().forEach(cartProduct->{
             cartDto.getProducts().add(
