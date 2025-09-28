@@ -1,6 +1,7 @@
 package com.example.petify.model.cart;
 
 import com.example.petify.model.profile.POProfile;
+import com.example.petify.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,8 +20,8 @@ public class Cart {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "profile_id")
-    private POProfile profile;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(
             mappedBy = "cart",

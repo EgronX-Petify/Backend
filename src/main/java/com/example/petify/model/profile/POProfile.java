@@ -24,23 +24,12 @@ public class POProfile extends Profile {
     @OneToMany(mappedBy = "profile" , cascade = CascadeType.ALL , orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
 
-
-    @OneToOne(mappedBy = "profile" , cascade = CascadeType.ALL , orphanRemoval = true)
-    private Cart cart;
-
-    @OneToMany(mappedBy = "profile" , cascade = CascadeType.ALL , orphanRemoval = true)
-    private Set<Order> orders = new HashSet<>();
-
     public void addPet(Pet pet){
         this.pets.add(pet);
     }
 
     public void addReview(Review review){
         this.reviews.add(review);
-    }
-
-    public void addOrder(Order order){
-        this.orders.add(order);
     }
 
 }

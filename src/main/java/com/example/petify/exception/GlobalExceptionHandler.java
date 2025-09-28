@@ -22,7 +22,14 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<APIErrorResponse> handleException(Exception e) {
-        log.error("Caught an Exception: " , e);
+        StackTraceElement[] trace = e.getStackTrace();
+        log.error("Error: {} - {}\ncaused by: {}\n",
+                e.getClass().getSimpleName(),
+                e.getMessage(),
+                String.valueOf(e.getCause()));
+        if (trace.length > 0) {
+            log.error(" at {}", trace[0]);
+        }
         APIErrorResponse err = APIErrorResponse.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .message("Unexpected error occurred.")

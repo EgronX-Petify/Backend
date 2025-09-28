@@ -2,6 +2,8 @@ package com.example.petify.service.ecom.impl;
 
 import com.example.petify.dto.ecom.CartDto;
 import com.example.petify.mapper.ecom.CartMapper;
+import com.example.petify.model.user.User;
+import com.example.petify.repository.user.UserRepository;
 import com.example.petify.service.ecom.CartService;
 import com.example.petify.model.cart.Cart;
 import com.example.petify.model.cart.CartProduct;
@@ -18,6 +20,7 @@ import java.util.HashSet;
 @Service
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
+    private final UserRepository userRepo;
     private final CartRepository cartRepo;
     private final ProductRepository productRepo;
 
@@ -30,12 +33,23 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public CartDto getCartByUserId(Long userId) {
-        Cart cart = cartRepo.findByUserId(userId).orElseThrow(
-                () -> new ResourceNotFoundException("Cart not found with user id " + userId)
+        User user = userRepo.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with id " + userId)
+        );
+
+        Cart cart = cartRepo.findByUserId(userId).orElseGet( () ->
+                cartRepo.save(
+                        Cart.builder()
+                                .user(user)
+                                .cartProducts(new HashSet<>())
+                                .build()
+                )
         );
         return CartMapper.toDto(cart);
     }
+
 
     @Override
     @Transactional

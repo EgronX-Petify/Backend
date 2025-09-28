@@ -33,7 +33,7 @@ public class CartController {
     @PostMapping("/items")
     public ResponseEntity<CartDto> addItemToCart(
             @AuthenticationPrincipal UserInfoDetails user,
-            @Valid CartDto.CartProductDto cartProduct) {
+            @Valid @RequestBody CartDto.CartProductDto cartProduct) {
         return ResponseEntity.ok().body(
                 cartService.addItemToCart(user.getId(), cartProduct.getProductId(), cartProduct.getQuantity())
         );

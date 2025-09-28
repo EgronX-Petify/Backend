@@ -9,11 +9,9 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<Cart,Long> {
 
     @Query("""
-    SELECT c FROM Cart c
-    JOIN FETCH c.cartProducts
-    JOIN FETCH c.profile pop
-    JOIN FETCH pop.user u
-    WHERE c.profile.user.id = :userId
+    SELECT DISTINCT c FROM Cart c
+    LEFT JOIN FETCH c.cartProducts
+    WHERE c.user.id = :userId
     """)
     Optional<Cart> findByUserId(Long userId);
 }

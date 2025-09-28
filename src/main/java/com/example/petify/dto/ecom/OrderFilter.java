@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderFilter {
-    private Long profileId;
+    private Long userId;
     private Long productId;
     private Long sellerId;
     private LocalDateTime startDate;
