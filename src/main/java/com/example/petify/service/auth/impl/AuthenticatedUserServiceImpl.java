@@ -1,5 +1,6 @@
 package com.example.petify.service.auth.impl;
 
+import com.example.petify.exception.ResourceNotFoundException;
 import com.example.petify.service.auth.AuthenticatedUserService;
 import com.example.petify.model.user.User;
 import com.example.petify.repository.user.UserRepository;
@@ -24,7 +25,8 @@ public class AuthenticatedUserServiceImpl implements AuthenticatedUserService {
 
         UserInfoDetails userDetails = (UserInfoDetails) authentication.getPrincipal();
         Long id = userDetails.getId();
-        User user = userRepository.findById(id).get();
-        return user;
+        return userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with id " + id)
+        );
     }
 }

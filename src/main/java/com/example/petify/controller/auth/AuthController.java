@@ -1,9 +1,9 @@
 package com.example.petify.controller.auth;
 
 
-import com.example.petify.service.auth.AuthenticationService;
-import com.example.petify.service.auth.RefreshTokenService;
-import com.example.petify.service.auth.passwordResetService;
+import com.example.petify.mapper.user.UserMapper;
+import com.example.petify.service.auth.*;
+import com.example.petify.service.user.UserService;
 import com.example.petify.utils.CookieUtils;
 import com.example.petify.model.user.RefreshToken;
 import com.example.petify.config.AppConfig;
@@ -26,6 +26,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
     private final AppConfig appConfig;
+    private final UserService userService;
     private final AuthenticationService authenticationService;
     private final passwordResetService passwordResetService;
     private final RefreshTokenService refreshTokenService;
@@ -49,6 +50,8 @@ public class AuthController {
 
         LoginResponse loginResponse = LoginResponse.builder()
                 .token(token)
+                .user(
+                        UserMapper.toDto(userService.getUserById(userDetails.getId())))
                 .build();
         
         return ResponseEntity.status(HttpStatus.OK).body(

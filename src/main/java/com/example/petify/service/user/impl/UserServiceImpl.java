@@ -110,4 +110,11 @@ public class UserServiceImpl implements UserService {
         profileImageRepository.flush();
     }
 
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User with this" + id + "id Not Found")
+        );
+    }
+
 }
