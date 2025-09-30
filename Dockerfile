@@ -3,12 +3,15 @@ FROM eclipse-temurin:24-jdk AS build
 
 WORKDIR /app
 
-# Copy Maven wrapper + pom.xml first for caching
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
+# Copy only the necessary Maven files to leverage Docker cache
+COPY pom.xml ./
+COPY mvnw ./
+COPY .mvn/ .mvn/
 
-# Copy source code
+# Download dependencies (cached if pom.xml hasn't changed)
+RUN ./mvnw dependency:go-offline -B
+
+# Now copy the source code
 COPY src ./src
 
 # Build application JAR
@@ -19,6 +22,7 @@ FROM eclipse-temurin:24-jre
 
 WORKDIR /app
 
+# Copy the JAR file from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
