@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
 
     // Product Image methods
     @Override
-    public ProductImage addImage(Long productId, MultipartFile file) {
+    public ProductImage addImage(Long productId, MultipartFile file) throws IOException {
         User user = authenticatedUserService.getCurrentUser();
         Product product = productRepo.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
         
