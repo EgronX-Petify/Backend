@@ -155,6 +155,64 @@ PUT /products
 ```http
 DELETE /products/{id}
 ```
+
+## 📷 Product Images
+**Authorization:** Required (SERVICE_PROVIDER role)
+
+### Upload Product Image
+```http
+POST /products/{productId}/image
+```
+
+**Description:** Upload an image for a product \
+**Path Params:**
+- `productId` (number): Product ID \
+**Request:** Multipart form data
+- `file` (file, required): Image file \
+**Response:** 200 OK - ProductImage object
+
+**Response Body:**
+```json
+{
+  "id": "number",
+  "name": "string",
+  "contentType": "string",
+  "data": "byte array"
+}
+```
+
+### Get Product Image by ID
+```http
+GET /products/{productId}/image/{imageId}
+```
+
+**Description:** Get product image by ID \
+**Path Params:**
+- `productId` (number): Product ID
+- `imageId` (number): Image ID \
+**Response:** 200 OK - ProductImage object
+
+### Get All Product Images
+```http
+GET /products/{productId}/image
+```
+
+**Description:** Get all images for a product \
+**Path Params:**
+- `productId` (number): Product ID \
+**Response:** 200 OK - Array of ProductImage objects
+
+### Delete Product Image
+```http
+DELETE /products/{productId}/image/{imageId}
+```
+
+**Description:** Delete product image \
+**Path Params:**
+- `productId` (number): Product ID
+- `imageId` (number): Image ID \
+**Response:** 204 No Content
+
 ## 🛒 Cart
 
 ### Get Current Cart
