@@ -1,6 +1,8 @@
 package com.example.petify.Runner;
 
 
+import com.example.petify.model.profile.AdminProfile;
+import com.example.petify.model.profile.Profile;
 import com.example.petify.model.user.Role;
 import com.example.petify.model.user.User;
 import com.example.petify.model.user.UserStatus;
@@ -24,13 +26,23 @@ public class AdminInitializer implements CommandLineRunner {
         String ADMIN_PASSWORD = "admin";
 
         userRepo.findByEmail(ADMIN_EMAIL).orElseGet( () ->
-                userRepo.save(
-                        User.builder()
-                                .email(ADMIN_EMAIL)
-                                .status(UserStatus.ACTIVE)
-                                .password(passwordEncoder.encode(ADMIN_PASSWORD))
-                                .role(Role.ADMIN)
-                                .build())
+                {
+                    User user = User.builder()
+                            .email(ADMIN_EMAIL)
+                            .status(UserStatus.ACTIVE)
+                            .password(passwordEncoder.encode(ADMIN_PASSWORD))
+                            .role(Role.ADMIN)
+                            .build();
+
+                    Profile profile = new AdminProfile();
+                    profile.setName("Admin");
+                    profile.setPhoneNumber("123456789");
+                    profile.setUser(user);
+
+                    user.setProfile(profile);
+
+                    return userRepo.save(user);
+                }
         );
 
         log.info("Admin has been initialized");
