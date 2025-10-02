@@ -2,7 +2,12 @@ package com.example.petify.service.ecom;
 
 import com.example.petify.dto.ecom.ProductDto;
 import com.example.petify.dto.ecom.ProductFilter;
+import com.example.petify.model.product.ProductImage;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 public interface ProductService {
     ProductDto getProduct(long id);
@@ -14,4 +19,13 @@ public interface ProductService {
     ProductDto updateProduct(ProductDto productDto);
 
     void deleteProduct(long id);
+
+    // Product Image methods
+    ProductImage addImage(Long productId, MultipartFile file) throws IOException;
+
+    ProductImage getImageById(Long productId, Long imageId);
+
+    List<ProductImage> getProductImages(Long productId);
+
+    void deleteProductImage(Long productId, Long imageId);
 }

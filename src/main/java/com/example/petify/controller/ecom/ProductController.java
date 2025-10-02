@@ -3,12 +3,15 @@ package com.example.petify.controller.ecom;
 
 import com.example.petify.dto.ecom.ProductDto;
 import com.example.petify.dto.ecom.ProductFilter;
+import com.example.petify.model.product.ProductImage;
 import com.example.petify.service.ecom.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -65,6 +68,39 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // Product Image endpoints
+    @PostMapping("/{productId}/image")
+    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
+    public ResponseEntity<ProductImage> uploadImage(
+            @RequestParam MultipartFile file,
+            @PathVariable Long productId) {
+        ProductImage image = productService.addImage(productId, file);
+        return ResponseEntity.ok(image);
+    }
+
+    @GetMapping("/{productId}/image/{imageId}")
+    public ResponseEntity<ProductImage> getImage(
+            @PathVariable Long productId,
+            @PathVariable Long imageId) {
+        ProductImage image = productService.getImageById(productId, imageId);
+        return ResponseEntity.ok(image);
+    }
+
+    @GetMapping("/{productId}/image")
+    public ResponseEntity<List<ProductImage>> getProductImages(@PathVariable Long productId) {
+        List<ProductImage> images = productService.getProductImages(productId);
+        return ResponseEntity.ok(images);
+    }
+
+    @DeleteMapping("/{productId}/image/{imageId}")
+    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
+    public ResponseEntity<Void> deleteProductImage(
+            @PathVariable Long productId,
+            @PathVariable Long imageId) {
+        productService.deleteProductImage(productId, imageId);
         return ResponseEntity.noContent().build();
     }
 }

@@ -135,24 +135,14 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public PetImage getImageById(Long petId, Long imageId) {
-        User user = authenticatedUserService.getCurrentUser();
         Pet pet = petRepository.findById(petId).orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + petId));
-        if(!pet.getProfile().getUser().getId().equals(user.getId())) {
-            throw new IllegalArgumentException("User is not the owner of this pet");
-        }
-
         PetImage image = petImageRepository.findById(imageId).orElseThrow(() -> new ResourceNotFoundException("Image not found with id: " + imageId));
         return image;
     }
 
     @Override
     public List<PetImage> getPetImages(Long petId) {
-        User user = authenticatedUserService.getCurrentUser();
         Pet pet = petRepository.findById(petId).orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + petId));
-        if(!pet.getProfile().getUser().getId().equals(user.getId())) {
-            throw new IllegalArgumentException("User is not the owner of this pet");
-        }
-
         return petImageRepository.findByPetId(petId);
 
     }

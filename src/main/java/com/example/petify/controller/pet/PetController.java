@@ -87,7 +87,6 @@ public class PetController {
     }
 
     @GetMapping("/{petId}/image/{imageId}")
-    @PreAuthorize("hasRole('PET_OWNER')")
     public ResponseEntity<PetImage> getImage(
             @PathVariable Long petId,
             @PathVariable Long imageId) {
@@ -96,7 +95,6 @@ public class PetController {
     }
 
     @GetMapping("/{petId}/image")
-    @PreAuthorize("hasRole('PET_OWNER')")
     public ResponseEntity<List<PetImage>> getPetImages(@PathVariable Long petId){
         List<PetImage> images = petService.getPetImages(petId);
         return ResponseEntity.ok(images);
