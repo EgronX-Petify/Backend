@@ -21,8 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ServiceProviderController {
 
-    ServiceProviderService serviceProviderService;
-    AppointmentService appointmentService;
+    private final ServiceProviderService serviceProviderService;
+    private final AppointmentService appointmentService;
 
     // ========== PUBLIC ENDPOINTS ==========
 
