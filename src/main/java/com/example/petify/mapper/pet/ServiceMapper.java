@@ -17,7 +17,7 @@ public class ServiceMapper {
                 .price(service.getPrice())
                 .notes(service.getNotes())
                 .providerName(service.getProvider().getName())
-                .providerId(service.getProvider().getId())
+                .providerId(service.getProvider().getUser().getId())
                 .build();
     }
 
