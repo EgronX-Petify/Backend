@@ -30,9 +30,4 @@ public class CheckoutController {
                 checkoutService.Checkout(user.getId(), checkoutReq)
         );
     }
-
-    @PostMapping("/webhook")
-    public ResponseEntity<?> Webhook() {
-        return ResponseEntity.status(HttpStatus.CREATED).body("");
-    }
 }
