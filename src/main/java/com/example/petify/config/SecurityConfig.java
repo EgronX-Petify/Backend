@@ -48,6 +48,7 @@ public class SecurityConfig {
                                 .requestMatchers("/swagger-ui.html","/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                 .requestMatchers("/api/v1/user/*").permitAll()
                                 .requestMatchers("/api/v1/service" , "/api/v1/service/**").permitAll()
+                                .requestMatchers("/api/v1/products" , "/api/v1/products/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

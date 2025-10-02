@@ -50,6 +50,7 @@ public class ProductController {
 
     // Create new product
     @PostMapping
+    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         ProductDto createdProduct = productService.createProduct(productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
@@ -57,6 +58,7 @@ public class ProductController {
 
     // Update existing product
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<ProductDto> updateProduct(
             @PathVariable long id,
             @RequestBody ProductDto productDto) {
@@ -67,6 +69,7 @@ public class ProductController {
 
     // Delete product
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
