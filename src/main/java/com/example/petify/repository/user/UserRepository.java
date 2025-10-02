@@ -1,5 +1,6 @@
 package com.example.petify.repository.user;
 
+import com.example.petify.model.user.Role;
 import com.example.petify.model.user.User;
 import com.example.petify.model.user.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     @Query("SELECT COUNT(u) FROM User u WHERE u.status = :status")
     Long countByStatus(@Param("status") UserStatus status);
+    
+    List<User> findByRole(Role role);
 }

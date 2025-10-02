@@ -1,7 +1,7 @@
 package com.example.petify.mapper.pet;
 
 import com.example.petify.model.service.Services;
-import com.example.petify.dto.pet.CreateServiceRequest;
+import com.example.petify.dto.user.serviceprovider.CreateServiceRequest;
 import com.example.petify.dto.pet.ServiceResponse;
 import org.springframework.stereotype.Component;
 

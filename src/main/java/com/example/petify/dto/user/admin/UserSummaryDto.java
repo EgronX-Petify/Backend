@@ -1,4 +1,4 @@
-package com.example.petify.dto.admin;
+package com.example.petify.dto.user.admin;
 
 import com.example.petify.model.user.UserStatus;
 import lombok.Data;

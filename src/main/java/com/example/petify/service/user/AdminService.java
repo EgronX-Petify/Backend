@@ -1,8 +1,8 @@
-package com.example.petify.service.admin;
+package com.example.petify.service.user;
 
-import com.example.petify.dto.admin.AdminActionResponse;
-import com.example.petify.dto.admin.UserStatusCountDto;
-import com.example.petify.dto.admin.UserSummaryDto;
+import com.example.petify.dto.user.admin.AdminActionResponse;
+import com.example.petify.dto.user.admin.UserStatusCountDto;
+import com.example.petify.dto.user.admin.UserSummaryDto;
 import com.example.petify.model.user.UserStatus;
 
 import java.util.List;

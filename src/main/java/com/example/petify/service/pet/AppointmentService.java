@@ -1,9 +1,9 @@
 package com.example.petify.service.pet;
 
 import com.example.petify.dto.pet.AppointmentResponse;
-import com.example.petify.dto.pet.ApproveAppointmentRequest;
+import com.example.petify.dto.user.serviceprovider.ApproveAppointmentRequest;
 import com.example.petify.dto.pet.CreateAppointmentRequest;
-import com.example.petify.dto.pet.RejectAppointmentRequest;
+import com.example.petify.dto.user.serviceprovider.RejectAppointmentRequest;
 
 import java.util.List;
 

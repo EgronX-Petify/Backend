@@ -1,4 +1,4 @@
-package com.example.petify.dto.admin;
+package com.example.petify.dto.user.admin;
 
 import lombok.Builder;
 import lombok.Data;

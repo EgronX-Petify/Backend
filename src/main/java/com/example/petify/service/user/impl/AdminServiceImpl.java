@@ -1,9 +1,9 @@
-package com.example.petify.service.admin.impl;
+package com.example.petify.service.user.impl;
 
-import com.example.petify.dto.admin.AdminActionResponse;
-import com.example.petify.dto.admin.UserStatusCountDto;
-import com.example.petify.dto.admin.UserSummaryDto;
-import com.example.petify.service.admin.AdminService;
+import com.example.petify.dto.user.admin.AdminActionResponse;
+import com.example.petify.dto.user.admin.UserStatusCountDto;
+import com.example.petify.dto.user.admin.UserSummaryDto;
+import com.example.petify.service.user.AdminService;
 import com.example.petify.repository.product.ProductRepository;
 import com.example.petify.repository.service.ServiceRepository;
 import com.example.petify.model.user.Role;

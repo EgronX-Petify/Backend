@@ -1,18 +1,11 @@
 package com.example.petify.controller.pet;
 
 import com.example.petify.model.service.ServiceCategory;
-import com.example.petify.dto.pet.AppointmentResponse;
-import com.example.petify.dto.pet.ApproveAppointmentRequest;
-import com.example.petify.dto.pet.CreateServiceRequest;
-import com.example.petify.dto.pet.RejectAppointmentRequest;
 import com.example.petify.dto.pet.ServiceResponse;
 import com.example.petify.service.pet.AppointmentService;
 import com.example.petify.service.pet.ServiceService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,134 +63,6 @@ public class ServiceController {
         return ResponseEntity.ok(service);
     }
 
-    @GetMapping("/provider/me/service")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<List<ServiceResponse>> getMyServices() {
-        List<ServiceResponse> services = serviceService.getMyServices();
-        return ResponseEntity.ok(services);
-    }
-
-
-    @PostMapping("/provider/me/service")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<ServiceResponse> createService(
-            @Valid @RequestBody CreateServiceRequest request) {
-        ServiceResponse service = serviceService.createService(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(service);
-    }
-
-    @PutMapping("/provider/me/service/{serviceId}")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<ServiceResponse> updateService(
-            @PathVariable Long serviceId,
-            @Valid @RequestBody CreateServiceRequest request) {
-        ServiceResponse service = serviceService.updateService(serviceId , request);
-        return ResponseEntity.ok(service);
-    }
-
-    @DeleteMapping("/provider/me/service/{serviceId}")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<Void> deleteService(@PathVariable Long serviceId) {
-        serviceService.deleteService(serviceId);
-        return ResponseEntity.noContent().build();
-    }
-
-
-    // ========== SERVICE PROVIDER APPOINTMENT MANAGEMENT ==========
-
-    @GetMapping("/provider/me/service/{serviceId}/appointment")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<List<AppointmentResponse>> getAppointmentsByService(
-            @PathVariable Long serviceId,
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) String timeFilter) { // "upcoming", "past", or null for all
-        
-        List<AppointmentResponse> appointments = appointmentService.getMyAppointmentsByService(serviceId);
-        
-        if ("upcoming".equals(timeFilter)) {
-            appointments = appointments.stream()
-                    .filter(appointment -> appointment.getScheduledTime()!=null && appointment.getScheduledTime().isAfter(java.time.LocalDateTime.now()))
-                    .sorted((a, b) -> a.getScheduledTime().compareTo(b.getScheduledTime()))
-                    .toList();
-        } else if ("past".equals(timeFilter)) {
-            appointments = appointments.stream()
-                    .filter(appointment -> appointment.getScheduledTime()!=null && appointment.getScheduledTime().isBefore(java.time.LocalDateTime.now()))
-                    .sorted((a, b) -> b.getScheduledTime().compareTo(a.getScheduledTime()))
-                    .toList();
-        }
-        
-        if (status != null && !status.isEmpty()) {
-            appointments = appointments.stream()
-                    .filter(appointment -> status.equalsIgnoreCase(appointment.getStatus()))
-                    .toList();
-        }
-        
-        return ResponseEntity.ok(appointments);
-    }
-
-
-    @GetMapping("/provider/me/appointment")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<List<AppointmentResponse>> getAppointmentsByProvider(
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) String timeFilter) { // "upcoming", "past", or null for all
-        
-        List<AppointmentResponse> appointments = appointmentService.getProviderAppointments();
-        
-        if ("upcoming".equals(timeFilter)) {
-            appointments = appointments.stream()
-                    .filter(appointment -> appointment.getScheduledTime()!=null && appointment.getScheduledTime().isAfter(java.time.LocalDateTime.now()))
-                    .sorted((a, b) -> a.getScheduledTime().compareTo(b.getScheduledTime()))
-                    .toList();
-        } else if ("past".equals(timeFilter)) {
-            appointments = appointments.stream()
-                    .filter(appointment -> appointment.getScheduledTime()!=null && appointment.getScheduledTime().isBefore(java.time.LocalDateTime.now()))
-                    .sorted((a, b) -> b.getScheduledTime().compareTo(a.getScheduledTime()))
-                    .toList();
-        }
-
-        if (status != null && !status.isEmpty()) {
-            appointments = appointments.stream()
-                    .filter(appointment -> status.equalsIgnoreCase(appointment.getStatus()))
-                    .toList();
-        }
-        
-        return ResponseEntity.ok(appointments);
-    }
-
-    @GetMapping("/provider/me/appointment/{appointmentId}")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<AppointmentResponse> getAppointmentById(
-            @PathVariable Long appointmentId) {
-        AppointmentResponse appointment = appointmentService.getAppointmentById(appointmentId);
-        return ResponseEntity.ok(appointment);
-    }
-
-
-    @PatchMapping("/provider/me/appointment/{appointmentId}/approve")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<AppointmentResponse> approveAppointment(
-            @PathVariable Long appointmentId,
-            @Valid @RequestBody ApproveAppointmentRequest request) {
-        AppointmentResponse appointment = appointmentService.approveAppointment(appointmentId, request);
-        return ResponseEntity.ok(appointment);
-    }
-
-    @PatchMapping("/provider/me/appointment/{appointmentId}/reject")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<AppointmentResponse> rejectAppointment(
-            @PathVariable Long appointmentId,
-            @Valid @RequestBody RejectAppointmentRequest request) {
-        AppointmentResponse appointment = appointmentService.rejectAppointment(appointmentId, request);
-        return ResponseEntity.ok(appointment);
-    }
-
-    @PatchMapping("/provider/me/appointment/{appointmentId}/complete")
-    @PreAuthorize("hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<AppointmentResponse> completeAppointment(
-            @PathVariable Long appointmentId) {
-        AppointmentResponse appointment = appointmentService.completeAppointment(appointmentId);
-        return ResponseEntity.ok(appointment);
-    }
+    
 
 }

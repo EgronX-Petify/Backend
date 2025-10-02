@@ -1,4 +1,4 @@
-package com.example.petify.dto.pet;
+package com.example.petify.dto.user.serviceprovider;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
