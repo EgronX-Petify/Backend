@@ -80,7 +80,7 @@ public class ProductController {
     @PreAuthorize("hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<ProductImage> uploadImage(
             @RequestParam MultipartFile file,
-            @PathVariable Long productId) throws IOException {
+            @PathVariable Long productId) {
         ProductImage image = productService.addImage(productId, file);
         return ResponseEntity.ok(image);
     }

@@ -28,7 +28,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -99,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
 
     // Product Image methods
     @Override
-    public ProductImage addImage(Long productId, MultipartFile file) throws IOException {
+    public ProductImage addImage(Long productId, MultipartFile file) {
         User user = authenticatedUserService.getCurrentUser();
         Product product = productRepo.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
         

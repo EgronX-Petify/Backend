@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -135,21 +134,17 @@ public class PetServiceImpl implements PetService {
         if(!pet.getProfile().getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException("User is not the owner of this pet");
         }
-        try {
-            String filePath = FileStorageUtil.saveFile(file, "pets");
-            
-            PetImage image = PetImage.builder()
-                    .contentType(file.getContentType())
-                    .name(file.getOriginalFilename())
-                    .filePath(filePath)
-                    .pet(pet)
-                    .build();
+        
+        String filePath = FileStorageUtil.saveFile(file, "pets");
+        
+        PetImage image = PetImage.builder()
+                .contentType(file.getContentType())
+                .name(file.getOriginalFilename())
+                .filePath(filePath)
+                .pet(pet)
+                .build();
 
-            return petImageRepository.save(image);
-
-        } catch (IOException e) {
-            throw new FileStorageException("Could not store the image");
-        }
+        return petImageRepository.save(image);
     }
 
     @Override

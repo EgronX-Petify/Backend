@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -87,20 +86,15 @@ public class UserServiceImpl implements UserService {
         User user = authenticatedUserService.getCurrentUser();
         Profile profile = user.getProfile();
 
-        try {
-            String filePath = FileStorageUtil.saveFile(file, "profiles");
-            
-            ProfileImage image = ProfileImage.builder()
-                    .profile(profile)
-                    .name(file.getOriginalFilename())
-                    .contentType(file.getContentType())
-                    .filePath(filePath)
-                    .build();
-            return profileImageRepository.save(image);
-
-        } catch (IOException e) {
-            throw new FileStorageException("Could not store the image");
-        }
+        String filePath = FileStorageUtil.saveFile(file, "profiles");
+        
+        ProfileImage image = ProfileImage.builder()
+                .profile(profile)
+                .name(file.getOriginalFilename())
+                .contentType(file.getContentType())
+                .filePath(filePath)
+                .build();
+        return profileImageRepository.save(image);
     }
 
     @Override

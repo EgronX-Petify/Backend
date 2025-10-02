@@ -21,7 +21,7 @@ public interface ProductService {
     void deleteProduct(long id);
 
     // Product Image methods
-    ProductImage addImage(Long productId, MultipartFile file) throws IOException;
+    ProductImage addImage(Long productId, MultipartFile file);
 
     ProductImage getImageById(Long productId, Long imageId);
 
