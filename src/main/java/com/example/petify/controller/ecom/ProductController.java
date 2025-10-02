@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -76,7 +77,7 @@ public class ProductController {
     @PreAuthorize("hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<ProductImage> uploadImage(
             @RequestParam MultipartFile file,
-            @PathVariable Long productId) {
+            @PathVariable Long productId) throws IOException {
         ProductImage image = productService.addImage(productId, file);
         return ResponseEntity.ok(image);
     }
