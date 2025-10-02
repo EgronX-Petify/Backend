@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.HashSet;
 
 @Service
@@ -63,6 +64,7 @@ public class CartServiceImpl implements CartService {
                 () -> new ResourceNotFoundException("Cart not found with user id " + userId)
         );
         cart.removeCartProduct(productId);
+        cartRepo.save(cart);
         return CartMapper.toDto(cart);
     }
 
@@ -80,11 +82,17 @@ public class CartServiceImpl implements CartService {
         Product product = productRepo.findById(itemId).orElseThrow(
                 () -> new ResourceNotFoundException("Product not found with id " + itemId)
         );
+
+        if (quantity < 1) {
+            throw new InvalidParameterException("Quantity should be greater than 0");
+        }
+
         CartProduct cartItem = new CartProduct();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
 
         cart.addCartProduct(cartItem);
+        cartRepo.save(cart);
         return CartMapper.toDto(cart);
     }
 
