@@ -34,7 +34,7 @@ public class Cart {
         cartProduct.setCart(this);
         for (CartProduct existing : cartProducts) {
             if (existing.getProduct().getId().equals(cartProduct.getProduct().getId())) {
-                existing.setQuantity(existing.getQuantity() + cartProduct.getQuantity());
+                existing.setQuantity(cartProduct.getQuantity());
                 return;
             }
         }
