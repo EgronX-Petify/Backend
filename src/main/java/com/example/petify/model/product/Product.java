@@ -35,7 +35,7 @@ public class Product {
     @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL , orphanRemoval = true , fetch = FetchType.EAGER)
     private Set<ProductImage> images = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "product_tags",
             joinColumns = @JoinColumn(name = "product_id"),
