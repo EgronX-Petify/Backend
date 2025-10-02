@@ -6,6 +6,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "product_image")
+@EntityListeners(ProductImageListener.class)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,9 +21,10 @@ public class ProductImage {
     @Column(nullable = false)
     private String contentType;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "data", columnDefinition = "MEDIUMBLOB")
+    @Column(name = "file_path")
+    private String filePath;
+
+    @Transient
     private byte[] data;
 
 

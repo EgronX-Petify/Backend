@@ -7,6 +7,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "profile_image")
+@EntityListeners(ProfileImageListener.class)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,9 +22,10 @@ public class ProfileImage {
     @Column(nullable = false)
     private String contentType;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "data", columnDefinition = "MEDIUMBLOB")
+    @Column(name = "file_path")
+    private String filePath;
+
+    @Transient
     private byte[] data;
 
 

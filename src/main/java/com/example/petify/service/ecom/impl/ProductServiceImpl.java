@@ -20,6 +20,7 @@ import com.example.petify.repository.profile.SPProfileRepository;
 import com.example.petify.service.auth.AuthenticatedUserService;
 import com.example.petify.exception.FileStorageException;
 import com.example.petify.exception.ResourceNotFoundException;
+import com.example.petify.utils.FileStorageUtil;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -48,13 +49,27 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepo.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Product not found with id " + id)
         );
+        
+        product.getImages().forEach(image -> {
+            if (image.getFilePath() != null) {
+                image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+            }
+        });
+        
         return ProductMapper.toDto(product);
     }
 
     @Override
     public Page<ProductDto> getProducts(ProductFilter filter, int limit, int offset) {
         return productRepo.findAll(ProductSpecification.filter(filter), PageRequest.of(offset, limit))
-                .map(ProductMapper::toDto);
+                .map(product -> {
+                    product.getImages().forEach(image -> {
+                        if (image.getFilePath() != null) {
+                            image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+                        }
+                    });
+                    return ProductMapper.toDto(product);
+                });
     }
 
     @Override
@@ -93,10 +108,12 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("User is not the owner of this product");
         }
         
+        String filePath = FileStorageUtil.saveFile(file, "products");
+        
         ProductImage image = ProductImage.builder()
                 .contentType(file.getContentType())
                 .name(file.getOriginalFilename())
-                .data(file.getBytes())
+                .filePath(filePath)
                 .product(product)
                 .build();
 
@@ -116,14 +133,25 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("Image does not belong to this product");
         }
         
+        if (image.getFilePath() != null) {
+            image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+        }
+        
         return image;
     }
 
     @Override
     public List<ProductImage> getProductImages(Long productId) {
         Product product = productRepo.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
-
-        return productImageRepository.findByProductId(productId);
+        List<ProductImage> images = productImageRepository.findByProductId(productId);
+        
+        images.forEach(image -> {
+            if (image.getFilePath() != null) {
+                image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+            }
+        });
+        
+        return images;
     }
 
     @Override
@@ -140,6 +168,10 @@ public class ProductServiceImpl implements ProductService {
         // Additional check to ensure the image belongs to the product
         if(!image.getProduct().getId().equals(productId)) {
             throw new IllegalArgumentException("Image does not belong to this product");
+        }
+        
+        if (image.getFilePath() != null) {
+            FileStorageUtil.deleteFile(image.getFilePath());
         }
         
         productImageRepository.deleteById(imageId);

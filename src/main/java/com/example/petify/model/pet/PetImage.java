@@ -5,6 +5,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "pet_image")
+@EntityListeners(PetImageListener.class)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,9 +20,10 @@ public class PetImage {
     @Column(nullable = false)
     private String contentType;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "data", columnDefinition = "MEDIUMBLOB")
+    @Column(name = "file_path")
+    private String filePath;
+
+    @Transient
     private byte[] data;
 
     @JsonIgnore

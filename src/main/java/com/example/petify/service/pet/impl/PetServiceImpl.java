@@ -15,6 +15,7 @@ import com.example.petify.mapper.pet.PetMapper;
 import com.example.petify.service.pet.PetService;
 import com.example.petify.model.profile.POProfile;
 import com.example.petify.exception.ResourceNotFoundException;
+import com.example.petify.utils.FileStorageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +62,14 @@ public class PetServiceImpl implements PetService {
         POProfile profile = getPOProfile(user);
         List<Pet> pets = petRepository.findByProfile(profile);
 
+        pets.forEach(pet -> {
+            pet.getImages().forEach(image -> {
+                if (image.getFilePath() != null) {
+                    image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+                }
+            });
+        });
+
         return pets.stream()
                 .map(petMapper::mapToResponse)
                 .collect(Collectors.toList());
@@ -75,6 +84,13 @@ public class PetServiceImpl implements PetService {
 
         Pet pet = petRepository.findByIdAndProfileId(petId, profile.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("error while fetching the pet with id: " + petId));
+        
+        pet.getImages().forEach(image -> {
+            if (image.getFilePath() != null) {
+                image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+            }
+        });
+        
         return petMapper.mapToResponse(pet);
     }
     
@@ -99,6 +115,7 @@ public class PetServiceImpl implements PetService {
 
         Pet pet = petRepository.findByIdAndProfileId(petId, profile.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found with ID: " + petId));
+        
         petRepository.delete(pet);
     }
     
@@ -119,10 +136,12 @@ public class PetServiceImpl implements PetService {
             throw new IllegalArgumentException("User is not the owner of this pet");
         }
         try {
+            String filePath = FileStorageUtil.saveFile(file, "pets");
+            
             PetImage image = PetImage.builder()
                     .contentType(file.getContentType())
                     .name(file.getOriginalFilename())
-                    .data(file.getBytes())
+                    .filePath(filePath)
                     .pet(pet)
                     .build();
 
@@ -137,14 +156,26 @@ public class PetServiceImpl implements PetService {
     public PetImage getImageById(Long petId, Long imageId) {
         Pet pet = petRepository.findById(petId).orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + petId));
         PetImage image = petImageRepository.findById(imageId).orElseThrow(() -> new ResourceNotFoundException("Image not found with id: " + imageId));
+        
+        if (image.getFilePath() != null) {
+            image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+        }
+        
         return image;
     }
 
     @Override
     public List<PetImage> getPetImages(Long petId) {
         Pet pet = petRepository.findById(petId).orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + petId));
-        return petImageRepository.findByPetId(petId);
-
+        List<PetImage> images = petImageRepository.findByPetId(petId);
+        
+        images.forEach(image -> {
+            if (image.getFilePath() != null) {
+                image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+            }
+        });
+        
+        return images;
     }
 
     @Override
@@ -154,6 +185,12 @@ public class PetServiceImpl implements PetService {
         if(!pet.getProfile().getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException("User is not the owner of this pet");
         }
+        
+        PetImage image = petImageRepository.findById(imageId).orElse(null);
+        if (image != null && image.getFilePath() != null) {
+            FileStorageUtil.deleteFile(image.getFilePath());
+        }
+        
         petImageRepository.deleteById(imageId);
     }
 

@@ -13,6 +13,7 @@ import com.example.petify.dto.user.UpdateUserProfileRequest;
 import com.example.petify.dto.user.UserProfileResponse;
 import com.example.petify.mapper.user.ProfileMapper;
 import com.example.petify.service.user.UserService;
+import com.example.petify.utils.FileStorageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,13 @@ public class UserServiceImpl implements UserService {
     public UserProfileResponse getCurrentUserProfile() {
         User user = authenticatedUserService.getCurrentUser();
         Profile profile = user.getProfile();
+        
+        profile.getImages().forEach(image -> {
+            if (image.getFilePath() != null) {
+                image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+            }
+        });
+        
         return profileMapper.toProfileResponse(profile);
     }
 
@@ -51,6 +59,11 @@ public class UserServiceImpl implements UserService {
 
         notificationService.sendProfileUpdateNotification(profile);
 
+        profile.getImages().forEach(image -> {
+            if (image.getFilePath() != null) {
+                image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+            }
+        });
 
         return profileMapper.toProfileResponse(user.getProfile());
     }
@@ -59,6 +72,13 @@ public class UserServiceImpl implements UserService {
     public UserProfileResponse getUserProfile(Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+        
+        user.getProfile().getImages().forEach(image -> {
+            if (image.getFilePath() != null) {
+                image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+            }
+        });
+        
         return profileMapper.toProfileResponse(user.getProfile());
     }
 
@@ -68,11 +88,13 @@ public class UserServiceImpl implements UserService {
         Profile profile = user.getProfile();
 
         try {
+            String filePath = FileStorageUtil.saveFile(file, "profiles");
+            
             ProfileImage image = ProfileImage.builder()
                     .profile(profile)
                     .name(file.getOriginalFilename())
                     .contentType(file.getContentType())
-                    .data(file.getBytes())
+                    .filePath(filePath)
                     .build();
             return profileImageRepository.save(image);
 
@@ -84,6 +106,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public ProfileImage getImageById(Long imageId) {
         ProfileImage image = profileImageRepository.findById(imageId).orElseThrow(() -> new ResourceNotFoundException("Image not found with id: " + imageId));
+        
+        if (image.getFilePath() != null) {
+            image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+        }
+        
         return image;
     }
 
@@ -91,7 +118,15 @@ public class UserServiceImpl implements UserService {
     public List<ProfileImage> getImages() {
         User user = authenticatedUserService.getCurrentUser();
         Profile profile = user.getProfile();
-        return profileImageRepository.findByProfile(profile);
+        List<ProfileImage> images = profileImageRepository.findByProfile(profile);
+        
+        images.forEach(image -> {
+            if (image.getFilePath() != null) {
+                image.setData(FileStorageUtil.loadFile(image.getFilePath()));
+            }
+        });
+        
+        return images;
     }
 
     @Override
@@ -103,6 +138,10 @@ public class UserServiceImpl implements UserService {
         ProfileImage image = profileImageRepository.findById(imageId).orElseThrow(() -> new ResourceNotFoundException("Image not found with id: " + imageId));
         if(!image.getProfile().getId().equals(profile.getId())) {
             throw new IllegalArgumentException("User is not the owner of this image");
+        }
+
+        if (image.getFilePath() != null) {
+            FileStorageUtil.deleteFile(image.getFilePath());
         }
 
         profile.getImages().remove(image);
