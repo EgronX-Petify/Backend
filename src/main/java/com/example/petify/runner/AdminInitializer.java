@@ -1,4 +1,4 @@
-package com.example.petify.Runner;
+package com.example.petify.runner;
 
 
 import com.example.petify.model.profile.AdminProfile;
