@@ -139,10 +139,18 @@ The application uses MySQL as the primary database. The database schema is autom
 - Secure file upload with validation
 - Support for various image formats
 
-### Health Checks
-The application includes Spring Boot Actuator for monitoring:
-- Health endpoint: `/actuator/health`
-- Info endpoint: `/actuator/info`
+### Health Checks & Monitoring
+The application includes Spring Boot Actuator for comprehensive monitoring and management:
+- **Access**: All actuator endpoints are restricted to users with **ADMIN role only**
+- **Base Path**: `/actuator`
+- **Available Endpoints**:
+  - `/actuator/health` - Application health status
+  - `/actuator/info` - Application information
+  - `/actuator/metrics` - Application metrics
+  - `/actuator/env` - Environment properties
+  - And more...
+
+**Note**: You must authenticate with admin credentials to access any actuator endpoint. Non-admin users will receive a 403 Forbidden response.
 
 ## 🤝 Contributing
 

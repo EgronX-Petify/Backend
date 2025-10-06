@@ -49,6 +49,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/user/*").permitAll()
                                 .requestMatchers("/api/v1/service" , "/api/v1/service/**").permitAll()
                                 .requestMatchers("/api/v1/products" , "/api/v1/products/**").permitAll()
+                                .requestMatchers("/actuator/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
