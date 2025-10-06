@@ -52,10 +52,6 @@ Petify is a full-featured backend service designed to support pet care businesse
 **Important**: Before running the application, you must create a `.env` file in the root directory with the following variables:
 
 ```env
-# Database Configuration
-DB_USER=your_db_username
-DB_PASS=your_db_password
-
 # Server Configuration
 SERVER_PORT=8080
 
@@ -74,6 +70,8 @@ PAYMOB_PUBLIC_KEY=your_paymob_public_key
 PAYMOB_INTEGRATION_ID=your_integration_id
 WEBHOOK_URL=your_webhook_url
 ```
+
+**Note**: Database credentials are configured in `docker-compose.yml` (user: `root`, password: `rootpass`, database: `petify`). If you need to change them, edit the `docker-compose.yml` file directly.
 
 ### 🚀 Running the Application
 
