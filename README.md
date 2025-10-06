@@ -79,7 +79,7 @@ WEBHOOK_URL=your_webhook_url
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/EgronX-Petify/Backend
    cd Backend
    ```
 
